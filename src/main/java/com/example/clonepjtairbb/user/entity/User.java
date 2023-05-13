@@ -7,20 +7,19 @@ import lombok.NoArgsConstructor;
 
 @Entity(name = "users")
 @Getter
-@Table(name = "Users")
 @NoArgsConstructor
 public class User extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private String email;
 
-    @Column(nullable = false)
+    @Column
     private String password;
 
-    @Column(nullable = false)
+    @Column
     private String nickname;
 
     public User(String email, String password, String nickname) {

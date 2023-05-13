@@ -1,19 +1,15 @@
 package com.example.clonepjtairbb.user.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestPart;
+
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import com.example.clonepjtairbb.common.utils.Message;
+import com.example.clonepjtairbb.common.utils.SuccessResponseEntity;
 import com.example.clonepjtairbb.user.dto.SignInRequest;
 import com.example.clonepjtairbb.user.dto.SignUpRequest;
 import com.example.clonepjtairbb.user.service.UserService;
@@ -27,20 +23,21 @@ public class UserController {
 
 	private final UserService userService;
 
-	@GetMapping("/api/user/signup")
-	public ResponseEntity<Message> signup(SignUpRequest signUpRequest) {
+	@PostMapping("/api/user/signup")
+	public SuccessResponseEntity<Message> signup(@RequestBody SignUpRequest signUpRequest) {
 
-		return userService.signup(signUpRequest);
+		userService.signup(signUpRequest);
+		return new SuccessResponseEntity<>(new Message("회원가입 완료"), HttpStatus.OK);
 	}
 
 	@PostMapping(value ="/api/user/signin")
-	public ResponseEntity<Message> signIn(
+	public SuccessResponseEntity<Message> signIn(
 		@RequestBody SignInRequest signInRequest,
 		HttpServletResponse response
 		) {
-		return userService.signIn(signInRequest, response);
+			userService.signIn(signInRequest, response);
+		return new SuccessResponseEntity<>(new Message("로그인 완료"), HttpStatus.OK);
 	}
-
 
 
 }
