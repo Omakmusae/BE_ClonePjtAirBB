@@ -2,9 +2,8 @@ package com.example.clonepjtairbb.stay.controller;
 
 import com.example.clonepjtairbb.common.security.UserDetailsImpl;
 import com.example.clonepjtairbb.common.utils.Message;
-import com.example.clonepjtairbb.stay.dto.RegisterStayDto;
-import com.example.clonepjtairbb.stay.dto.StayListResponseDto;
-import com.example.clonepjtairbb.stay.repository.StayRepository;
+import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
+import com.example.clonepjtairbb.stay.dto.StayListResponse;
 import com.example.clonepjtairbb.stay.service.StayService;
 import com.example.clonepjtairbb.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -24,26 +23,19 @@ public class StayController {
     @PostMapping
     public ResponseEntity<Message> registerNewStay(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestBody RegisterStayDto registerStayDto
+            @RequestBody RegisterStayRequest registerStayRequest
     ){
         User user = userDetails.getUser();
-        return stayService.registerNewStay(user, registerStayDto);
+        return stayService.registerNewStay(user, registerStayRequest);
     }
 
     //전체 숙소 조회(no filter)
     @GetMapping
-    public ResponseEntity<List<StayListResponseDto>> getAllStay(
+    public ResponseEntity<List<StayListResponse>> getAllStay(
         @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
         User user = userDetails.getUser();
         return stayService.getAllStay(user);
     }
-
-
-
-
-
-
-
 
 }
