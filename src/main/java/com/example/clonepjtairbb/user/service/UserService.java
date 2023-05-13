@@ -10,7 +10,6 @@ import com.example.clonepjtairbb.user.entity.User;
 import com.example.clonepjtairbb.user.jwt.JwtUtil;
 import com.example.clonepjtairbb.user.repository.UserRepository;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +28,7 @@ public class UserService implements UserServiceInterface {
 
 
     @Transactional
-    public ResponseEntity<Message> signup(SignUpRequest signUpRequest) {
+    public void signup(SignUpRequest signUpRequest) {
         String email = signUpRequest.getEmail();
         String password = signUpRequest.getPassword();
         String nickname = signUpRequest.getNickname();
@@ -42,11 +41,11 @@ public class UserService implements UserServiceInterface {
 
         User user = new User(email, password, nickname);
         userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.OK).body(new Message("회원가입 완료"));
+
     }
 
-    @Transactional(readOnly = true)
-    public ResponseEntity<Message> signIn(SignInRequest signInRequest, HttpServletResponse response) {
+    @Transactional
+    public void signIn(SignInRequest signInRequest, HttpServletResponse response) {
         String email = signInRequest.getEmail();
         String password = signInRequest.getPassword();
 
@@ -60,7 +59,7 @@ public class UserService implements UserServiceInterface {
         }
         //response에 jwt 토큰을 추가
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail(), user.getNickname()));
-        return ResponseEntity.status(HttpStatus.OK).body(new Message("로그인 완료"));
+
     }
 
 }
