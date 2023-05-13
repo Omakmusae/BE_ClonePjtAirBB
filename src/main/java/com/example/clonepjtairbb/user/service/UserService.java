@@ -2,15 +2,14 @@ package com.example.clonepjtairbb.user.service;
 
 import java.util.Optional;
 
-import com.example.clonepjtairbb.common.utils.Message;
 import com.example.clonepjtairbb.dependency.UserServiceInterface;
 import com.example.clonepjtairbb.user.dto.SignInRequest;
 import com.example.clonepjtairbb.user.dto.SignUpRequest;
 import com.example.clonepjtairbb.user.entity.User;
-import com.example.clonepjtairbb.user.jwt.JwtUtil;
+import com.example.clonepjtairbb.common.utils.JwtUtil;
 import com.example.clonepjtairbb.user.repository.UserRepository;
 
-import org.springframework.http.ResponseEntity;
+import jakarta.servlet.http.Cookie;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,8 +56,8 @@ public class UserService implements UserServiceInterface {
         if(!user.getPassword().equals(password)){
             throw  new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
-        //response에 jwt 토큰을 추가
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail(), user.getNickname()));
+        //response cookie에 jwt 토큰을 추가
+        response.addCookie(new Cookie(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail(), user.getNickname())));
 
     }
 
