@@ -1,4 +1,4 @@
-package com.example.clonepjtairbb.user.jwt;
+package com.example.clonepjtairbb.common.utils;
 
 
 import io.jsonwebtoken.Claims;
@@ -28,7 +28,7 @@ public class JwtUtil {
 	//private final UserDetailsServiceImpl userDetailsService;
 	public static final String AUTHORIZATION_HEADER = "Authorization";
 	public static final String AUTHORIZATION_KEY = "auth";
-	private static final String BEARER_PREFIX = "Bearer ";
+	public static final String BEARER_PREFIX = "Bearer ";
 	private static final long TOKEN_TIME = 60 * 60 * 1000L;
 
 	@Value("${jwt.secret.key}")
@@ -55,8 +55,7 @@ public class JwtUtil {
 	public String createToken(String username, String nickname) {
 		Date date = new Date();
 		String role = "USER";
-		return BEARER_PREFIX +
-			Jwts.builder()
+		return Jwts.builder()
 				.setSubject(username)
 				.claim(AUTHORIZATION_KEY, role)
 				.setExpiration(new Date(date.getTime() + TOKEN_TIME))
