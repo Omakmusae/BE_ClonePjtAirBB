@@ -12,6 +12,4 @@ public enum ConvenienceEnum {
     SPORTEQUIPMENT,         // 운동기구
     FIRSTAIDKIT,            // 구급상자
     FIREEXTINGUISHER        // 소화기
-
-
 }
