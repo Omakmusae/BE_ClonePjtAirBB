@@ -66,7 +66,7 @@
      }
 
      @Transactional
-     public ResponseEntity<List<StayListResponse>> getAllStay(User user) {
+     public ResponseEntity<List<StayListResponse>> getAllStay() {
          return new ResponseEntity<>(
 <<<<<<< HEAD
              stayRepository.findAll()
