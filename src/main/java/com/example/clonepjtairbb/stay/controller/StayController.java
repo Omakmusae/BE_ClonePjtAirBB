@@ -1,3 +1,4 @@
+
 package com.example.clonepjtairbb.stay.controller;
 
 import com.example.clonepjtairbb.common.security.UserDetailsImpl;
@@ -8,6 +9,7 @@ import com.example.clonepjtairbb.stay.dto.StayListResponse;
 import com.example.clonepjtairbb.stay.dto.StayOneResponse;
 import com.example.clonepjtairbb.stay.service.StayService;
 import com.example.clonepjtairbb.user.entity.User;
+import com.example.clonepjtairbb.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,11 @@ import java.util.List;
 @RequestMapping("api/stay")
 public class StayController {
     private final StayService stayService;
+    private final UserRepository userRepository;
+
+    //비로그인 조회 구현시 삭제
+    private final User tempUser =
+            userRepository.findById(1L).orElseThrow(()->new NullPointerException("tempUser 가 없습니다"));
 
     //숙소 등록
     @PostMapping
@@ -38,6 +45,7 @@ public class StayController {
             @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
         User user = userDetails.getUser();
+        if(user == null){user = tempUser;}     // 비로그인 조회 구현시 삭제
         return stayService.getAllStay(user);
     }
 

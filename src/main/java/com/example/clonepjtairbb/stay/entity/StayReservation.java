@@ -30,6 +30,8 @@ public class StayReservation {
     public StayReservation(
             User user, Stay stay, Calendar checkinDate, Calendar checkoutDate, Integer groupSize
     ) {
+        this.user = user;
+        this.stay = stay;
         this.checkinDate = checkinDate;
         this.checkoutDate = checkoutDate;
         this.groupSize = groupSize;
