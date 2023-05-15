@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.6'
 	id 'io.spring.dependency-management' version '1.1.0'
+	// querydsl관련 명령어를 gradle탭에 생성해준다. (권장사항)
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.example'
@@ -36,7 +38,29 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
+
+
+	// QueryDSL JPA
+
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	// == 스프링 부트 3.0 이상 ==
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 }
+
+def querydslDir = "$buildDir/generated/querydsl"
+sourceSets {
+	main.java.srcDirs += [querydslDir]
+}
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()
