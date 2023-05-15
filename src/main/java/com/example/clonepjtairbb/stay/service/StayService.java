@@ -3,6 +3,7 @@
  import com.example.clonepjtairbb.common.utils.Message;
  import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
  import com.example.clonepjtairbb.stay.dto.StayListResponse;
+ import com.example.clonepjtairbb.stay.dto.StayOneResponse;
  import com.example.clonepjtairbb.stay.entity.Convenience;
  import com.example.clonepjtairbb.stay.entity.ImageUrl;
  import com.example.clonepjtairbb.stay.entity.Stay;
@@ -61,11 +62,11 @@
 
      }
 
-     @Transactional
-     public ResponseEntity<List<StayListResponse>> searchStay(User user) {
-
-
-         return new ResponseEntity<>(HttpStatus.OK);
+     @Transactional(readOnly = true)
+     public StayOneResponse getStayById(Long id) {
+         Stay stay = stayRepository.findById(id).orElseThrow(
+                 () -> new IllegalArgumentException("해당 숙소가 없습니다. id=" + id));
+         return new StayOneResponse(stay);
      }
 
 
