@@ -2,7 +2,7 @@ package com.example.clonepjtairbb.stay.repository.QueryDSL;
 
 import java.util.Calendar;
 
-public class StayReservationRepositoryImpl implements StayReservationRepositoryCustom{
+public class StayReservationRepositoryCustomImpl implements StayReservationRepositoryCustom{
 
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.clonepjtairbb.stay.repository.queryDSL;
+package com.example.clonepjtairbb.stay.repository.QueryDSL;
 
 import com.example.clonepjtairbb.common.enums.*;
 import com.example.clonepjtairbb.stay.dto.SearchOptionRequest;
@@ -15,7 +15,7 @@ import static com.example.clonepjtairbb.stay.entity.QStayDetailFeature.stayDetai
 
 @Repository
 @RequiredArgsConstructor
-public class StayRepositoryCustomImpl{
+public class StayRepositoryCustomImpl implements StayRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
     public List<Stay> findBySearchOption(SearchOptionRequest request) {
         Integer cost = (Integer) request.getData().get("costPerDay");           // 숙박비
