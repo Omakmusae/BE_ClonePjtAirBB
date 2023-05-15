@@ -21,6 +21,7 @@ public class StayOneResponse{
     private Integer costPerDay;
     private StayTypeEnum stayType;
 
+
     public StayOneResponse(Stay stay) {
         this.id = stay.getId();
         this.host = stay.getHost();

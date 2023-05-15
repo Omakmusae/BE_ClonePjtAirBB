@@ -1,9 +1,11 @@
 package com.example.clonepjtairbb.stay.repository.QueryDSL;
 
+import com.example.clonepjtairbb.stay.entity.Stay;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import static com.example.clonepjtairbb.stay.entity.QStay.stay;
+
+import java.util.List;
 
 
 @Repository
