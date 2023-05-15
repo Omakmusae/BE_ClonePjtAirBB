@@ -1,5 +1,6 @@
 package com.example.clonepjtairbb.stay.entity;
 
+import com.example.clonepjtairbb.common.enums.BathTypeEnum;
 import com.example.clonepjtairbb.common.enums.BedTypeEnum;
 import com.example.clonepjtairbb.common.enums.DescTagEnum;
 import jakarta.persistence.*;
@@ -26,6 +27,8 @@ public class StayDetailFeature {
 
     private BedTypeEnum bedType;
 
+    private BathTypeEnum bathType;
+
     private Boolean isAlone;
 
     @OneToMany
@@ -45,11 +48,12 @@ public class StayDetailFeature {
 
     @Builder
     public StayDetailFeature(
-            Stay stay, Integer numBed, BedTypeEnum bedType, Boolean isAlone, DescTagEnum descTag,
+            Stay stay, Integer numBed, BedTypeEnum bedType, BathTypeEnum bathType, Boolean isAlone, DescTagEnum descTag,
             Integer checkInAfter, Integer checkOutBefore, Integer maxGroupNum) {
         this.stay = stay;
         this.numBed = numBed;
         this.bedType = bedType;
+        this.bathType = bathType;
         this.isAlone = isAlone;
         this.descTag = descTag;
         this.checkInAfter = checkInAfter;
