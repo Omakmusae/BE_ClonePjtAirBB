@@ -2,26 +2,20 @@
 
  import com.example.clonepjtairbb.common.utils.Message;
  import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
-<<<<<<< HEAD
  import com.example.clonepjtairbb.stay.dto.SearchOptionRequest;
-=======
  import com.example.clonepjtairbb.stay.dto.ReservationRequest;
->>>>>>> c24a81511fa96bc063b7af75430377178f86af8d
  import com.example.clonepjtairbb.stay.dto.StayListResponse;
  import com.example.clonepjtairbb.stay.dto.StayOneResponse;
  import com.example.clonepjtairbb.stay.entity.Convenience;
  import com.example.clonepjtairbb.stay.entity.ImageUrl;
  import com.example.clonepjtairbb.stay.entity.Stay;
  import com.example.clonepjtairbb.stay.entity.StayDetailFeature;
-<<<<<<< HEAD
  import com.example.clonepjtairbb.stay.repository.ConvenienceRepository;
  import com.example.clonepjtairbb.stay.repository.ImageUrlRepository;
+ import com.example.clonepjtairbb.stay.repository.QueryDSL.StayRepositoryCustomImpl;
  import com.example.clonepjtairbb.stay.repository.StayDetailFeatureRepository;
  import com.example.clonepjtairbb.stay.repository.StayRepository;
- import com.example.clonepjtairbb.stay.repository.queryDSL.StayRepositoryCustomImpl;
-=======
  import com.example.clonepjtairbb.stay.repository.*;
->>>>>>> c24a81511fa96bc063b7af75430377178f86af8d
  import com.example.clonepjtairbb.user.entity.User;
  import lombok.RequiredArgsConstructor;
  import org.springframework.http.HttpStatus;
@@ -39,11 +33,7 @@
      private final StayDetailFeatureRepository stayDetailFeatureRepository;
      private final ImageUrlRepository imageUrlRepository;
      private final ConvenienceRepository convenienceRepository;
-<<<<<<< HEAD
-     private final StayRepositoryCustomImpl stayRepositoryCustom;
-=======
      private final StayReservationRepository stayReservationRepository;
->>>>>>> c24a81511fa96bc063b7af75430377178f86af8d
 
      @Transactional
      public ResponseEntity<Message> registerNewStay(User user, RegisterStayRequest registerStayRequest) {
@@ -68,11 +58,7 @@
      @Transactional
      public ResponseEntity<List<StayListResponse>> getAllStay() {
          return new ResponseEntity<>(
-<<<<<<< HEAD
-             stayRepository.findAll()
-=======
-             stayRepository.findTop20()
->>>>>>> c24a81511fa96bc063b7af75430377178f86af8d
+             stayRepository.findTop20ByIdIsGreaterThan(0L)
                          .stream()
                          .map(StayListResponse::new)
                          .collect(Collectors.toList()),
@@ -83,21 +69,10 @@
 
      @Transactional(readOnly = true)
      public StayOneResponse getStayById(Long id) {
-<<<<<<< HEAD
-         Stay stay = stayRepository.findById(id).orElseThrow(
-                 () -> new IllegalArgumentException("해당 숙소가 없습니다. id=" + id));
 
-         return new StayOneResponse(stay);
-     }
-
-     /////////////////////////////////////////////////////////////////////
-
-=======
          Stay stay = loadStayById(id);
          return new StayOneResponse(stay);
      }
-
->>>>>>> c24a81511fa96bc063b7af75430377178f86af8d
      @Transactional
      public ResponseEntity<Message> makeStayReservation(User user, Long stayId, ReservationRequest reservationRequest) {
          Stay stay = loadStayById(stayId);
@@ -123,21 +98,11 @@
                  ()-> new NullPointerException("해당 숙소정보를 찾을 수 없습니다")
          );
      }
-//
-//     @Transactional
-//     public void updateStayAvailability() {
-//
-//     }
-//
-//     @Transactional
-//     public Stay getStayById() {
-//         return null;
-//     }
 
      public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
 //         List<Stay> stayList = stayRepository.findBySearchOption(cost, title);
          return new ResponseEntity<>(
-                 stayRepositoryCustom.findBySearchOption(request)
+                 stayRepository.findBySearchOption(request)
                          .stream()
                          .map(StayListResponse::new)
                          .collect(Collectors.toList()),HttpStatus.OK
