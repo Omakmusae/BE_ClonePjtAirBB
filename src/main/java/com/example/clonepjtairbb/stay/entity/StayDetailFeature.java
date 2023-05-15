@@ -28,7 +28,7 @@ public class StayDetailFeature {
 
     private Boolean isAlone;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Convenience> convenienceList = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER)

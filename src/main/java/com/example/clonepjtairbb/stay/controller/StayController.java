@@ -3,6 +3,7 @@ package com.example.clonepjtairbb.stay.controller;
 import com.example.clonepjtairbb.common.security.UserDetailsImpl;
 import com.example.clonepjtairbb.common.utils.Message;
 import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
+import com.example.clonepjtairbb.stay.dto.SearchOptionRequest;
 import com.example.clonepjtairbb.stay.dto.StayListResponse;
 import com.example.clonepjtairbb.stay.dto.StayOneResponse;
 import com.example.clonepjtairbb.stay.service.StayService;
@@ -46,5 +47,17 @@ public class StayController {
             @PathVariable Long id
     ){
         return new ResponseEntity<>(stayService.getStayById(id), HttpStatus.OK);
+    }
+
+//    @GetMapping("custom")
+//    public ResponseEntity<List<StayOneResponse>> getSearchItem(
+//            @RequestParam(value = "costPerDay", required = false) Integer cost,
+//            @RequestParam(value = "title", required = false) String title){
+//        return stayService.getSearchItem(cost, title);
+//    }
+
+    @GetMapping("custom")
+    public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request){
+        return stayService.getSearchItem(request);
     }
 }

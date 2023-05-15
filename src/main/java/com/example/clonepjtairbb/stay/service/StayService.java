@@ -2,6 +2,7 @@
 
  import com.example.clonepjtairbb.common.utils.Message;
  import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
+ import com.example.clonepjtairbb.stay.dto.SearchOptionRequest;
  import com.example.clonepjtairbb.stay.dto.StayListResponse;
  import com.example.clonepjtairbb.stay.dto.StayOneResponse;
  import com.example.clonepjtairbb.stay.entity.Convenience;
@@ -12,7 +13,7 @@
  import com.example.clonepjtairbb.stay.repository.ImageUrlRepository;
  import com.example.clonepjtairbb.stay.repository.StayDetailFeatureRepository;
  import com.example.clonepjtairbb.stay.repository.StayRepository;
- import com.example.clonepjtairbb.stay.repository.StayRepositoryImpl;
+ import com.example.clonepjtairbb.stay.repository.queryDSL.StayRepositoryCustomImpl;
  import com.example.clonepjtairbb.user.entity.User;
  import lombok.RequiredArgsConstructor;
  import org.springframework.http.HttpStatus;
@@ -30,7 +31,7 @@
      private final StayDetailFeatureRepository stayDetailFeatureRepository;
      private final ImageUrlRepository imageUrlRepository;
      private final ConvenienceRepository convenienceRepository;
-     private final StayRepositoryImpl stayRepositoryImpl;
+     private final StayRepositoryCustomImpl stayRepositoryCustom;
 
      @Transactional
      public ResponseEntity<Message> registerNewStay(User user, RegisterStayRequest registerStayRequest) {
@@ -55,7 +56,7 @@
      @Transactional
      public ResponseEntity<List<StayListResponse>> getAllStay(User user) {
          return new ResponseEntity<>(
-             stayRepositoryImpl.findAllInnerFetchJoinWithDistinct()
+             stayRepository.findAll()
                          .stream()
                          .map(StayListResponse::new)
                          .collect(Collectors.toList()),
@@ -68,25 +69,9 @@
      public StayOneResponse getStayById(Long id) {
          Stay stay = stayRepository.findById(id).orElseThrow(
                  () -> new IllegalArgumentException("해당 숙소가 없습니다. id=" + id));
+
          return new StayOneResponse(stay);
      }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
      /////////////////////////////////////////////////////////////////////
 
@@ -105,4 +90,13 @@
          return null;
      }
 
+     public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
+//         List<Stay> stayList = stayRepository.findBySearchOption(cost, title);
+         return new ResponseEntity<>(
+                 stayRepositoryCustom.findBySearchOption(request)
+                         .stream()
+                         .map(StayListResponse::new)
+                         .collect(Collectors.toList()),HttpStatus.OK
+                 );
+     }
  }
