@@ -25,10 +25,6 @@ public class StayController {
     private final StayService stayService;
     private final UserRepository userRepository;
 
-    //비로그인 조회 구현시 삭제
-    private final User tempUser =
-            userRepository.findById(1L).orElseThrow(()->new NullPointerException("tempUser 가 없습니다"));
-
     //숙소 등록
     @PostMapping
     public ResponseEntity<Message> registerNewStay(
@@ -42,11 +38,8 @@ public class StayController {
     //전체 숙소 조회(no filter)
     @GetMapping
     public ResponseEntity<List<StayListResponse>> getAllStay(
-            @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
-        User user = userDetails.getUser();
-        if(user == null){user = tempUser;}     // 비로그인 조회 구현시 삭제
-        return stayService.getAllStay(user);
+        return stayService.getAllStay();
     }
 
     //숙소 상세 조회
