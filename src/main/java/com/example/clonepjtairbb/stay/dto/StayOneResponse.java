@@ -30,6 +30,7 @@ public class StayOneResponse{
     private Integer checkOutBefore;
     private Integer maxGroupNum;
 
+
     public StayOneResponse(Stay stay) {
         this.id = stay.getId();
         this.stayTitle = stay.getTitle();

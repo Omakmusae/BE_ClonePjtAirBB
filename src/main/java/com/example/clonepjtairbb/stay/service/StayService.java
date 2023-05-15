@@ -12,7 +12,6 @@
  import com.example.clonepjtairbb.stay.repository.ImageUrlRepository;
  import com.example.clonepjtairbb.stay.repository.StayDetailFeatureRepository;
  import com.example.clonepjtairbb.stay.repository.StayRepository;
- import com.example.clonepjtairbb.stay.repository.StayRepositoryImpl;
  import com.example.clonepjtairbb.user.entity.User;
  import lombok.RequiredArgsConstructor;
  import org.springframework.http.HttpStatus;
@@ -30,7 +29,6 @@
      private final StayDetailFeatureRepository stayDetailFeatureRepository;
      private final ImageUrlRepository imageUrlRepository;
      private final ConvenienceRepository convenienceRepository;
-     private final StayRepositoryImpl stayRepositoryImpl;
 
      @Transactional
      public ResponseEntity<Message> registerNewStay(User user, RegisterStayRequest registerStayRequest) {
@@ -55,7 +53,7 @@
      @Transactional
      public ResponseEntity<List<StayListResponse>> getAllStay(User user) {
          return new ResponseEntity<>(
-             stayRepositoryImpl.findAllInnerFetchJoinWithDistinct()
+             stayRepository.findAll()
                          .stream()
                          .map(StayListResponse::new)
                          .collect(Collectors.toList()),
