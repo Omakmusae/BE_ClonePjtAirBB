@@ -5,6 +5,11 @@ import com.example.clonepjtairbb.common.security.UserDetailsServiceImpl;
 import com.example.clonepjtairbb.common.utils.JwtUtil;
 import com.example.clonepjtairbb.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+=======
+>>>>>>> c24a81511fa96bc063b7af75430377178f86af8d
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

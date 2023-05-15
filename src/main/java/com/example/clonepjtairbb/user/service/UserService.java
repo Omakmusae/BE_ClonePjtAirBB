@@ -60,5 +60,4 @@ public class UserService implements UserServiceInterface {
         response.addCookie(new Cookie(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail(), user.getNickname())));
 
     }
-
 }
