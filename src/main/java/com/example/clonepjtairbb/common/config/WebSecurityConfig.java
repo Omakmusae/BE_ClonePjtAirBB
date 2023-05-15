@@ -5,13 +5,16 @@ import com.example.clonepjtairbb.common.security.UserDetailsServiceImpl;
 import com.example.clonepjtairbb.common.utils.JwtUtil;
 import com.example.clonepjtairbb.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+=======
+>>>>>>> c24a81511fa96bc063b7af75430377178f86af8d
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,6 +49,7 @@ public class WebSecurityConfig{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // CSRF 설정
+//        http.cors().configurationSource(corsConfig.corsConfigurationSource());
         http.csrf().disable();
         //세션 사용 안함
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -58,6 +62,9 @@ public class WebSecurityConfig{
 //                .antMatchers("/images/**").permitAll()
 //                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                 .requestMatchers("/api/user/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
+                .requestMatchers(HttpMethod.GET,"api/stay").permitAll()
+                .requestMatchers(HttpMethod.GET, "api/stay/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsServiceimpl()), UsernamePasswordAuthenticationFilter.class);
