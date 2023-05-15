@@ -2,16 +2,14 @@
 
  import com.example.clonepjtairbb.common.utils.Message;
  import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
+ import com.example.clonepjtairbb.stay.dto.ReservationRequest;
  import com.example.clonepjtairbb.stay.dto.StayListResponse;
  import com.example.clonepjtairbb.stay.dto.StayOneResponse;
  import com.example.clonepjtairbb.stay.entity.Convenience;
  import com.example.clonepjtairbb.stay.entity.ImageUrl;
  import com.example.clonepjtairbb.stay.entity.Stay;
  import com.example.clonepjtairbb.stay.entity.StayDetailFeature;
- import com.example.clonepjtairbb.stay.repository.ConvenienceRepository;
- import com.example.clonepjtairbb.stay.repository.ImageUrlRepository;
- import com.example.clonepjtairbb.stay.repository.StayDetailFeatureRepository;
- import com.example.clonepjtairbb.stay.repository.StayRepository;
+ import com.example.clonepjtairbb.stay.repository.*;
  import com.example.clonepjtairbb.user.entity.User;
  import lombok.RequiredArgsConstructor;
  import org.springframework.http.HttpStatus;
@@ -29,6 +27,7 @@
      private final StayDetailFeatureRepository stayDetailFeatureRepository;
      private final ImageUrlRepository imageUrlRepository;
      private final ConvenienceRepository convenienceRepository;
+     private final StayReservationRepository stayReservationRepository;
 
      @Transactional
      public ResponseEntity<Message> registerNewStay(User user, RegisterStayRequest registerStayRequest) {
@@ -64,43 +63,45 @@
 
      @Transactional(readOnly = true)
      public StayOneResponse getStayById(Long id) {
-         Stay stay = stayRepository.findById(id).orElseThrow(
-                 () -> new IllegalArgumentException("해당 숙소가 없습니다. id=" + id));
+         Stay stay = loadStayById(id);
          return new StayOneResponse(stay);
      }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+     @Transactional
+     public ResponseEntity<Message> makeStayReservation(User user, Long stayId, ReservationRequest reservationRequest) {
+         Stay stay = loadStayById(stayId);
+         if(checkStayReservationAvailable(reservationRequest)){
+             stayReservationRepository.save(reservationRequest.toStayReservationEntity(user, stay));
+         }
+         else{
+             throw new IllegalArgumentException("해당 날짜는 예약이 불가능합니다");
+         }
+         return new ResponseEntity<>(new Message("예약에 성공하였습니다!"), HttpStatus.ACCEPTED);
+     }
 
 
      /////////////////////////////////////////////////////////////////////
-
+//
      @Transactional
-     public Boolean checkStayReservationOkay() {
+     public Boolean checkStayReservationAvailable(ReservationRequest reservationRequest) {
+         ///Some logic
          return true;
      }
 
-     @Transactional
-     public void updateStayAvailability() {
-
+     public Stay loadStayById(Long stayId){
+         return stayRepository.findById(stayId).orElseThrow(
+                 ()-> new NullPointerException("해당 숙소정보를 찾을 수 없습니다")
+         );
      }
-
-     @Transactional
-     public Stay getStayById() {
-         return null;
-     }
+//
+//     @Transactional
+//     public void updateStayAvailability() {
+//
+//     }
+//
+//     @Transactional
+//     public Stay getStayById() {
+//         return null;
+//     }
 
  }

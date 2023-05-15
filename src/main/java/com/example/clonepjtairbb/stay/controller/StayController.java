@@ -3,6 +3,7 @@ package com.example.clonepjtairbb.stay.controller;
 import com.example.clonepjtairbb.common.security.UserDetailsImpl;
 import com.example.clonepjtairbb.common.utils.Message;
 import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
+import com.example.clonepjtairbb.stay.dto.ReservationRequest;
 import com.example.clonepjtairbb.stay.dto.StayListResponse;
 import com.example.clonepjtairbb.stay.dto.StayOneResponse;
 import com.example.clonepjtairbb.stay.service.StayService;
@@ -34,7 +35,7 @@ public class StayController {
     //전체 숙소 조회(no filter)
     @GetMapping
     public ResponseEntity<List<StayListResponse>> getAllStay(
-        @AuthenticationPrincipal UserDetailsImpl userDetails
+            @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
         User user = userDetails.getUser();
         return stayService.getAllStay(user);
@@ -47,4 +48,15 @@ public class StayController {
     ){
         return new ResponseEntity<>(stayService.getStayById(id), HttpStatus.OK);
     }
+
+    @PostMapping("/{stayId}")
+    public ResponseEntity<Message> makeStayReservation(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @PathVariable Long stayId,
+            @RequestBody ReservationRequest reservationRequest
+    ){
+        User user = userDetails.getUser();
+        return stayService.makeStayReservation(user, stayId, reservationRequest);
+    }
 }
+
