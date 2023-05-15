@@ -1,2 +1,4 @@
-package com.example.clonepjtairbb.stay.repository.QueryDSL;public class StayRepositoryCustom {
+package com.example.clonepjtairbb.stay.repository.QueryDSL;
+
+public interface StayRepositoryCustom {
 }
