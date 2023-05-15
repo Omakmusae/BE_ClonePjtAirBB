@@ -11,4 +11,6 @@
  import org.springframework.http.ResponseEntity;
 
  public interface StayRepository extends JpaRepository<Stay, Long>, StayRepositoryCustom {
+
+  List<Stay> findTop20();
  }

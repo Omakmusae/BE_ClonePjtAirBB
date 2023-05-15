@@ -13,10 +13,11 @@ public class DateDto {
     private Integer month;
     private Integer day;
 
+
     public Calendar toCalendar(){
         Calendar date = Calendar.getInstance();
         date.set(Calendar.YEAR, year);
-        date.set(Calendar.MONTH, month);
+        date.set(Calendar.MONTH, month-1);    //Calendar 에서 1월 = 0 부터 시작
         date.set(Calendar.DAY_OF_MONTH, day);
         return date;
     }

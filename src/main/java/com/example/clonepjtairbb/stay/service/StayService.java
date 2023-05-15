@@ -52,7 +52,7 @@
      @Transactional
      public ResponseEntity<List<StayListResponse>> getAllStay(User user) {
          return new ResponseEntity<>(
-             stayRepository.findAll()
+             stayRepository.findTop20()
                          .stream()
                          .map(StayListResponse::new)
                          .collect(Collectors.toList()),
@@ -80,8 +80,7 @@
      }
 
 
-     /////////////////////////////////////////////////////////////////////
-//
+     ///////////////////////////////////////////////////////////////////////
      @Transactional
      public Boolean checkStayReservationAvailable(ReservationRequest reservationRequest) {
          ///Some logic
