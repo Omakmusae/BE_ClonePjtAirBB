@@ -6,13 +6,11 @@
  import com.example.clonepjtairbb.stay.dto.ReservationRequest;
  import com.example.clonepjtairbb.stay.dto.StayListResponse;
  import com.example.clonepjtairbb.stay.dto.StayOneResponse;
- import com.example.clonepjtairbb.stay.entity.Convenience;
- import com.example.clonepjtairbb.stay.entity.ImageUrl;
- import com.example.clonepjtairbb.stay.entity.Stay;
- import com.example.clonepjtairbb.stay.entity.StayDetailFeature;
+ import com.example.clonepjtairbb.stay.entity.*;
  import com.example.clonepjtairbb.stay.repository.ConvenienceRepository;
  import com.example.clonepjtairbb.stay.repository.ImageUrlRepository;
  import com.example.clonepjtairbb.stay.repository.QueryDSL.StayRepositoryCustom;
+ import com.example.clonepjtairbb.stay.repository.QueryDSL.StayReservationRepositoryCustom;
  import com.example.clonepjtairbb.stay.repository.StayDetailFeatureRepository;
  import com.example.clonepjtairbb.stay.repository.StayRepository;
  import com.example.clonepjtairbb.stay.repository.*;
@@ -25,6 +23,7 @@
  import org.springframework.stereotype.Service;
  import org.springframework.transaction.annotation.Transactional;
 
+ import java.util.Calendar;
  import java.util.List;
  import java.util.stream.Collectors;
 
@@ -37,6 +36,7 @@
      private final ImageUrlRepository imageUrlRepository;
      private final ConvenienceRepository convenienceRepository;
      private final StayReservationRepository stayReservationRepository;
+     private final StayReservationRepositoryCustom stayReservationRepositoryCustom;
 
 
      @Transactional
@@ -103,8 +103,8 @@
 
      @Transactional
      public Boolean checkStayReservationAvailable(ReservationRequest reservationRequest) {
-         //some logic
-         return true;
+         return stayReservationRepositoryCustom.existsOverlappingPreviousReservation(reservationRequest)
+                 && !reservationRequest.getCheckinDate().toCalendar().before(Calendar.getInstance());
      }
 
      public Stay loadStayById(Long stayId){
