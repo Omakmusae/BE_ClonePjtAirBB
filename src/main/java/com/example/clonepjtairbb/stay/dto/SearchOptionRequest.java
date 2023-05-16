@@ -9,6 +9,7 @@ import java.util.Map;
 
 @Data
 public class SearchOptionRequest {
+
 //    private Map<String, Object> data = new HashMap<>();
     private String country;             // 나라
     private String city;                // 도시
