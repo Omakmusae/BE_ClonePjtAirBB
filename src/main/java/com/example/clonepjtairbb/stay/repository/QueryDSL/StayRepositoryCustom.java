@@ -19,29 +19,40 @@ public class StayRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
     public List<Stay> findBySearchOption(SearchOptionRequest request) {
-        Integer cost = (Integer) request.getData().get("costPerDay");           // 숙박비
-        String country = (String) request.getData().get("country");             // 나라
-        String city = (String) request.getData().get("city");                   // 도시
-        String stayType = (String) request.getData().get("stayType");           // 숙박 타입(주택, 캠핑카, 아파트 ..)
-        Integer numBed = (Integer) request.getData().get("numBed");             // 침대갯수
-        String bedType = (String) request.getData().get("bedType");             // 침대 타입
-//        boolean isAlone = (boolean) request.getData().get("isAlone");           // 숙박 시설 쉐어 여부
-        String descTag = (String) request.getData().get("descTag");             // 숙박 시설 태그
-        Integer maxGroupNum = (Integer) request.getData().get("maxGroupNum");   // 최대 게스트 수
+//        Integer cost = (Integer) request.getData().get("costPerDay");           // 숙박비
+//        String country = (String) request.getData().get("country");             // 나라
+//        String city = (String) request.getData().get("city");                   // 도시
+//        String stayType = (String) request.getData().get("stayType");           // 숙박 타입(주택, 캠핑카, 아파트 ..)
+//        Integer numBed = (Integer) request.getData().get("numBed");             // 침대갯수
+//        String bedType = (String) request.getData().get("bedType");             // 침대 타입
+////        boolean isAlone = (boolean) request.getData().get("isAlone");           // 숙박 시설 쉐어 여부
+//        String descTag = (String) request.getData().get("descTag");             // 숙박 시설 태그
+//        Integer maxGroupNum = (Integer) request.getData().get("maxGroupNum");   // 최대 게스트 수
+         String city = request.getCity();                   // 도시
+         String country = request.getCountry();             // 나라
+         String stayType = request.getStayType();           // 주거 형식
+         Integer min = request.getMinCost();                // 최소값
+         Integer max = request.getMaxCost();                // 최대값
+//        return jpaQueryFactory
+//                .select(stay)
+//                .from(stay)
+//                .where()
 
         return  jpaQueryFactory
                 .select(stay)
                 .from(stay)
-                .leftJoin(stay.stayDetailFeature, stayDetailFeature).fetchJoin()
-//                .on(eqNumBed(numBed), eqBedType(bedType), eqDescTag(descTag), eqMaxGroupNum(maxGroupNum))
-                .where(eqCostPerDay(cost), eqCountry(country), eqCity(city), eqStayType(stayType), eqNumBed(numBed), eqBedType(bedType), eqDescTag(descTag), eqMaxGroupNum(maxGroupNum))
+                .where(eqCity(city),
+                        eqCountry(country),
+                        eqCostPerDay(min, max),
+                        eqStayType(stayType))
                 .fetch();
     }
 
 
     // 숙박비
-    private BooleanExpression eqCostPerDay(Integer cost){
-        return cost==null ? null : stay.costPerDay.eq(cost);
+    private BooleanExpression eqCostPerDay(Integer minCost, Integer maxCost){
+        if(minCost == null && maxCost == null) return null;
+        return stay.costPerDay.between(minCost, maxCost);
     }
     // 나라
     private BooleanExpression eqCountry(String country){

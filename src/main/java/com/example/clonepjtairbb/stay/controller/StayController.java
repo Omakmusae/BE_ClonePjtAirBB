@@ -8,6 +8,7 @@ import com.example.clonepjtairbb.stay.dto.SearchOptionRequest;
 import com.example.clonepjtairbb.stay.dto.ReservationRequest;
 import com.example.clonepjtairbb.stay.dto.StayListResponse;
 import com.example.clonepjtairbb.stay.dto.StayOneResponse;
+import com.example.clonepjtairbb.stay.entity.Stay;
 import com.example.clonepjtairbb.stay.service.StayService;
 import com.example.clonepjtairbb.user.entity.User;
 import com.example.clonepjtairbb.user.repository.UserRepository;
@@ -54,9 +55,18 @@ public class StayController {
 
 
     @GetMapping("custom")
-    public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
+    public ResponseEntity<List<Stay>> getSearchItem(
+//            @RequestParam(value = "country", required = false)String country,
+//            @RequestParam(value = "city", required = false)String city,
+//            @RequestParam(value = "minCost", required = false)Integer minCost,
+//            @RequestParam(value = "maxCost", required = false)Integer maxCost,
+//            @RequestParam(value = "stayType", required = false)String stayType
+            SearchOptionRequest request
+    ) {
+//        return stayService.getSearchItem(country, city, minCost, maxCost, stayType);
         return stayService.getSearchItem(request);
     }
+
     @PostMapping("/{stayId}")
     public ResponseEntity<Message> makeStayReservation(
             @AuthenticationPrincipal UserDetailsImpl userDetails,

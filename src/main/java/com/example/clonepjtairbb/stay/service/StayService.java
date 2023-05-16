@@ -68,14 +68,9 @@
 
      }
 
-     public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
+     public ResponseEntity<List<Stay>> getSearchItem(SearchOptionRequest request) {
 //         List<Stay> stayList = stayRepository.findBySearchOption(cost, title);
-         return new ResponseEntity<>(
-                 stayRepositoryCustom.findBySearchOption(request)
-                         .stream()
-                         .map(StayListResponse::new)
-                         .collect(Collectors.toList()),HttpStatus.OK
-         );
+         return new ResponseEntity<>(stayRepositoryCustom.findBySearchOption(request), HttpStatus.OK);
      }
      @Transactional(readOnly = true)
      public StayOneResponse getStayById(Long id) {
