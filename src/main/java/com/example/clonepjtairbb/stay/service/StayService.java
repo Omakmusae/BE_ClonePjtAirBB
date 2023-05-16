@@ -12,7 +12,7 @@
  import com.example.clonepjtairbb.stay.entity.StayDetailFeature;
  import com.example.clonepjtairbb.stay.repository.ConvenienceRepository;
  import com.example.clonepjtairbb.stay.repository.ImageUrlRepository;
- import com.example.clonepjtairbb.stay.repository.QueryDSL.StayRepositoryCustomImpl;
+ import com.example.clonepjtairbb.stay.repository.QueryDSL.StayRepositoryCustom;
  import com.example.clonepjtairbb.stay.repository.StayDetailFeatureRepository;
  import com.example.clonepjtairbb.stay.repository.StayRepository;
  import com.example.clonepjtairbb.stay.repository.*;
@@ -32,6 +32,7 @@
  @RequiredArgsConstructor
  public class StayService{
      private final StayRepository stayRepository;
+     private final StayRepositoryCustom stayRepositoryCustom;
      private final StayDetailFeatureRepository stayDetailFeatureRepository;
      private final ImageUrlRepository imageUrlRepository;
      private final ConvenienceRepository convenienceRepository;
@@ -70,12 +71,22 @@
 
      }
 
+     public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
+//         List<Stay> stayList = stayRepository.findBySearchOption(cost, title);
+         return new ResponseEntity<>(
+                 stayRepositoryCustom.findBySearchOption(request)
+                         .stream()
+                         .map(StayListResponse::new)
+                         .collect(Collectors.toList()),HttpStatus.OK
+         );
+     }
      @Transactional(readOnly = true)
      public StayOneResponse getStayById(Long id) {
 
          Stay stay = loadStayById(id);
          return new StayOneResponse(stay);
      }
+
      @Transactional
      public ResponseEntity<Message> makeStayReservation(User user, Long stayId, ReservationRequest reservationRequest) {
          Stay stay = loadStayById(stayId);
@@ -88,11 +99,11 @@
          return new ResponseEntity<>(new Message("예약에 성공하였습니다!"), HttpStatus.ACCEPTED);
      }
 
-
      ///////////////////////////////////////////////////////////////////////
+
      @Transactional
      public Boolean checkStayReservationAvailable(ReservationRequest reservationRequest) {
-         ///Some logic
+         //some logic
          return true;
      }
 
@@ -100,15 +111,5 @@
          return stayRepository.findById(stayId).orElseThrow(
                  ()-> new NullPointerException("해당 숙소정보를 찾을 수 없습니다")
          );
-     }
-
-     public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
-//         List<Stay> stayList = stayRepository.findBySearchOption(cost, title);
-         return new ResponseEntity<>(
-                 stayRepository.findBySearchOption(request)
-                         .stream()
-                         .map(StayListResponse::new)
-                         .collect(Collectors.toList()),HttpStatus.OK
-                 );
      }
  }
