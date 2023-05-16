@@ -19,6 +19,7 @@ public class StayRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
     public List<Stay> findBySearchOption(SearchOptionRequest request) {
+
         Integer cost = (Integer) request.getData().get("costPerDay");           // 숙박비
         String country = (String) request.getData().get("country");             // 나라
         String city = (String) request.getData().get("city");                   // 도시
