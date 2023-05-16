@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class StayListResponse {
+    private Long stayId;
     private String country;
     private String city;
     private String hostNickname;
@@ -15,6 +16,7 @@ public class StayListResponse {
     private String thumbnailUrl;
 
     public StayListResponse(Stay stay) {
+        this.stayId = stay.getId();
         this.country = stay.getCountry().toString();
         this.city = stay.getCity().toString();
         this.hostNickname = stay.getHost().getNickname();

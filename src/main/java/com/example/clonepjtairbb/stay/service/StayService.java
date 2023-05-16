@@ -1,11 +1,7 @@
  package com.example.clonepjtairbb.stay.service;
 
  import com.example.clonepjtairbb.common.utils.Message;
- import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
- import com.example.clonepjtairbb.stay.dto.SearchOptionRequest;
- import com.example.clonepjtairbb.stay.dto.ReservationRequest;
- import com.example.clonepjtairbb.stay.dto.StayListResponse;
- import com.example.clonepjtairbb.stay.dto.StayOneResponse;
+ import com.example.clonepjtairbb.stay.dto.*;
  import com.example.clonepjtairbb.stay.entity.*;
  import com.example.clonepjtairbb.stay.repository.ConvenienceRepository;
  import com.example.clonepjtairbb.stay.repository.ImageUrlRepository;
@@ -73,12 +69,12 @@
 
      public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
 //         List<Stay> stayList = stayRepository.findBySearchOption(cost, title);
-         return new ResponseEntity<>(
-                 stayRepositoryCustom.findBySearchOption(request)
-                         .stream()
-                         .map(StayListResponse::new)
-                         .collect(Collectors.toList()),HttpStatus.OK
-         );
+         MappedSearchRequest mappedRequest = request.toMappedSearchRequest();
+         List<StayListResponse> stayResponseList = stayRepositoryCustom.findBySearchOption(mappedRequest)
+                 .stream()
+                 .map(StayListResponse::new)
+                 .toList();
+         return new ResponseEntity<>(stayResponseList, HttpStatus.OK);
      }
      @Transactional(readOnly = true)
      public StayOneResponse getStayById(Long id) {
@@ -99,6 +95,16 @@
          return new ResponseEntity<>(new Message("예약에 성공하였습니다!"), HttpStatus.ACCEPTED);
      }
 
+     @Transactional
+     public ResponseEntity<List<BookedDateListResponse>> getStayBookedDateList(Long stayId) {
+         Stay stay = loadStayById(stayId);
+         List<BookedDateListResponse> responseList = stayReservationRepository.findByStay(stay)
+                 .stream()
+                 .map(BookedDateListResponse::new)
+                 .toList();
+         return new ResponseEntity<>(responseList, HttpStatus.OK);
+     }
+
      ///////////////////////////////////////////////////////////////////////
 
      @Transactional
@@ -106,7 +112,6 @@
          return stayReservationRepositoryCustom.existsOverlappingPreviousReservation(reservationRequest)
                  && !reservationRequest.getCheckinDate().toCalendar().before(Calendar.getInstance());
      }
-
      public Stay loadStayById(Long stayId){
          return stayRepository.findById(stayId).orElseThrow(
                  ()-> new NullPointerException("해당 숙소정보를 찾을 수 없습니다")

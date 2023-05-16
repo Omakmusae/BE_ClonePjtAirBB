@@ -3,11 +3,8 @@ package com.example.clonepjtairbb.stay.controller;
 
 import com.example.clonepjtairbb.common.security.UserDetailsImpl;
 import com.example.clonepjtairbb.common.utils.Message;
-import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
-import com.example.clonepjtairbb.stay.dto.SearchOptionRequest;
-import com.example.clonepjtairbb.stay.dto.ReservationRequest;
-import com.example.clonepjtairbb.stay.dto.StayListResponse;
-import com.example.clonepjtairbb.stay.dto.StayOneResponse;
+import com.example.clonepjtairbb.stay.dto.*;
+import com.example.clonepjtairbb.stay.entity.Stay;
 import com.example.clonepjtairbb.stay.service.StayService;
 import com.example.clonepjtairbb.user.entity.User;
 import com.example.clonepjtairbb.user.repository.UserRepository;
@@ -53,11 +50,20 @@ public class StayController {
 
 
 
-    @GetMapping("/custom")
+    @GetMapping("/search")
     public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
         return stayService.getSearchItem(request);
     }
-    @PostMapping("/{stayId}")
+
+    @GetMapping("/book/{stayId}")
+    public ResponseEntity<List<BookedDateListResponse>> getBookedDateList(
+            @PathVariable Long stayId
+    ){
+        return stayService.getStayBookedDateList(stayId);
+    }
+
+
+    @PostMapping("/book/{stayId}")
     public ResponseEntity<Message> makeStayReservation(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long stayId,
