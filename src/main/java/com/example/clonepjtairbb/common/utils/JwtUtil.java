@@ -61,8 +61,6 @@ public class JwtUtil {
 		return null;
 	}
 
-
-
 	// 토큰 생성
 	public String createToken(String username, String nickname) {
 		Date date = new Date();

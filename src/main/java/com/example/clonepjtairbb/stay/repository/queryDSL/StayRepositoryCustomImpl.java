@@ -5,6 +5,8 @@ import com.example.clonepjtairbb.stay.dto.SearchOptionRequest;
 import com.example.clonepjtairbb.stay.entity.Stay;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +19,7 @@ import static com.example.clonepjtairbb.stay.entity.QStayDetailFeature.stayDetai
 @RequiredArgsConstructor
 public class StayRepositoryCustomImpl implements StayRepositoryCustom{
     private final JPAQueryFactory jpaQueryFactory;
+
     public List<Stay> findBySearchOption(SearchOptionRequest request) {
         Integer cost = (Integer) request.getData().get("costPerDay");           // 숙박비
         String country = (String) request.getData().get("country");             // 나라

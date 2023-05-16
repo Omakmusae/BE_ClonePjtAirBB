@@ -17,6 +17,8 @@
  import com.example.clonepjtairbb.stay.repository.StayRepository;
  import com.example.clonepjtairbb.stay.repository.*;
  import com.example.clonepjtairbb.user.entity.User;
+
+ import lombok.NoArgsConstructor;
  import lombok.RequiredArgsConstructor;
  import org.springframework.http.HttpStatus;
  import org.springframework.http.ResponseEntity;
@@ -34,6 +36,7 @@
      private final ImageUrlRepository imageUrlRepository;
      private final ConvenienceRepository convenienceRepository;
      private final StayReservationRepository stayReservationRepository;
+
 
      @Transactional
      public ResponseEntity<Message> registerNewStay(User user, RegisterStayRequest registerStayRequest) {
