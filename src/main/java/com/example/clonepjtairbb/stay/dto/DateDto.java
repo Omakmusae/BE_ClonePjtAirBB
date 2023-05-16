@@ -10,9 +10,10 @@ import java.util.Calendar;
 @NoArgsConstructor
 public class DateDto {
     private Integer year;
-    private Integer month;
-    private Integer day;
 
+    private Integer month;
+
+    private Integer day;
 
     public Calendar toCalendar(){
         Calendar date = Calendar.getInstance();
@@ -20,5 +21,11 @@ public class DateDto {
         date.set(Calendar.MONTH, month-1);    //Calendar 에서 1월 = 0 부터 시작
         date.set(Calendar.DAY_OF_MONTH, day);
         return date;
+    }
+
+    public DateDto(Integer year, Integer month, Integer day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
     }
 }
