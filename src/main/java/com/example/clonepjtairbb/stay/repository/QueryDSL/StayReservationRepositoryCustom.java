@@ -8,8 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Calendar;
-import static com.example.clonepjtairbb.stay.entity.QStay.stay;
+
 import static com.example.clonepjtairbb.stay.entity.QStayReservation.stayReservation;
+
 
 @RequiredArgsConstructor
 @Repository

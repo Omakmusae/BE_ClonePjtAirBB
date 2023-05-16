@@ -20,6 +20,7 @@ public class StayRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
     public List<Stay> findBySearchOption(SearchOptionRequest request) {
 
+
         Integer cost = (Integer) request.getData().get("costPerDay");           // 숙박비
         String country = (String) request.getData().get("country");             // 나라
         String city = (String) request.getData().get("city");                   // 도시
@@ -30,19 +31,22 @@ public class StayRepositoryCustom {
         String descTag = (String) request.getData().get("descTag");             // 숙박 시설 태그
         Integer maxGroupNum = (Integer) request.getData().get("maxGroupNum");   // 최대 게스트 수
 
+
         return  jpaQueryFactory
                 .select(stay)
                 .from(stay)
-                .leftJoin(stay.stayDetailFeature, stayDetailFeature).fetchJoin()
-//                .on(eqNumBed(numBed), eqBedType(bedType), eqDescTag(descTag), eqMaxGroupNum(maxGroupNum))
-                .where(eqCostPerDay(cost), eqCountry(country), eqCity(city), eqStayType(stayType), eqNumBed(numBed), eqBedType(bedType), eqDescTag(descTag), eqMaxGroupNum(maxGroupNum))
+                .where(eqCity(city),
+                        eqCountry(country),
+                        eqCostPerDay(min, max),
+                        eqStayType(stayType))
                 .fetch();
     }
 
 
     // 숙박비
-    private BooleanExpression eqCostPerDay(Integer cost){
-        return cost==null ? null : stay.costPerDay.eq(cost);
+    private BooleanExpression eqCostPerDay(Integer minCost, Integer maxCost){
+        if(minCost == null && maxCost == null) return null;
+        return stay.costPerDay.between(minCost, maxCost);
     }
     // 나라
     private BooleanExpression eqCountry(String country){
