@@ -9,6 +9,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,12 +45,23 @@ public class JwtUtil {
 
 	// header 토큰을 가져오기
 	public String resolveToken(HttpServletRequest request) {
-		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
-			return bearerToken.substring(7);
+		Cookie[] cookies = request.getCookies();
+		String token = "";
+		if(cookies != null){
+			for(Cookie cookie : cookies){
+				if(cookie.getName().equals(AUTHORIZATION_HEADER)){
+					return cookie.getValue();
+				}
+			}
 		}
+//		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+//		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
+//			return bearerToken.substring(7);
+//		}
 		return null;
 	}
+
+
 
 	// 토큰 생성
 	public String createToken(String username, String nickname) {

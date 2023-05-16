@@ -34,7 +34,7 @@
 
      private StayTypeEnum stayType;
 
-     @OneToOne
+     @OneToOne(fetch = FetchType.LAZY)
      private StayDetailFeature stayDetailFeature;
 
      public void setStayDetailFeature(StayDetailFeature stayDetailFeature){ this.stayDetailFeature = stayDetailFeature;}

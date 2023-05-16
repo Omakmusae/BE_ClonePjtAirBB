@@ -1,12 +1,7 @@
 package com.example.clonepjtairbb.user.controller;
 
-import org.springframework.http.HttpStatus;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import com.example.clonepjtairbb.common.utils.Message;
@@ -38,6 +33,4 @@ public class UserController {
 			userService.signIn(signInRequest, response);
 		return ResponseEntity.ok(new Message("로그인 완료"));
 	}
-
-
 }

@@ -2,6 +2,8 @@
 
  import com.example.clonepjtairbb.common.utils.Message;
  import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
+ import com.example.clonepjtairbb.stay.dto.SearchOptionRequest;
+ import com.example.clonepjtairbb.stay.dto.ReservationRequest;
  import com.example.clonepjtairbb.stay.dto.StayListResponse;
  import com.example.clonepjtairbb.stay.dto.StayOneResponse;
  import com.example.clonepjtairbb.stay.entity.Convenience;
@@ -10,9 +12,10 @@
  import com.example.clonepjtairbb.stay.entity.StayDetailFeature;
  import com.example.clonepjtairbb.stay.repository.ConvenienceRepository;
  import com.example.clonepjtairbb.stay.repository.ImageUrlRepository;
+ import com.example.clonepjtairbb.stay.repository.QueryDSL.StayRepositoryCustomImpl;
  import com.example.clonepjtairbb.stay.repository.StayDetailFeatureRepository;
  import com.example.clonepjtairbb.stay.repository.StayRepository;
-
+ import com.example.clonepjtairbb.stay.repository.*;
  import com.example.clonepjtairbb.user.entity.User;
  import lombok.RequiredArgsConstructor;
  import org.springframework.http.HttpStatus;
@@ -30,7 +33,7 @@
      private final StayDetailFeatureRepository stayDetailFeatureRepository;
      private final ImageUrlRepository imageUrlRepository;
      private final ConvenienceRepository convenienceRepository;
-
+     private final StayReservationRepository stayReservationRepository;
 
      @Transactional
      public ResponseEntity<Message> registerNewStay(User user, RegisterStayRequest registerStayRequest) {
@@ -53,9 +56,9 @@
      }
 
      @Transactional
-     public ResponseEntity<List<StayListResponse>> getAllStay(User user) {
+     public ResponseEntity<List<StayListResponse>> getAllStay() {
          return new ResponseEntity<>(
-             stayRepository.findAll()
+             stayRepository.findTop20ByIdIsGreaterThan(0L)
                          .stream()
                          .map(StayListResponse::new)
                          .collect(Collectors.toList()),
@@ -66,49 +69,43 @@
 
      @Transactional(readOnly = true)
      public StayOneResponse getStayById(Long id) {
-         Stay stay = stayRepository.findById(id).orElseThrow(
-                 () -> new IllegalArgumentException("해당 숙소가 없습니다. id=" + id));
+
+         Stay stay = loadStayById(id);
          return new StayOneResponse(stay);
      }
-
-     @Transactional(readOnly = true)
-     public StayOneResponse searchStay(Long id) {
-         Stay stay = stayRepository.findById(id).orElseThrow(
-             () -> new IllegalArgumentException("해당 숙소가 없습니다. id=" + id));
-         return new StayOneResponse(stay);
-     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     /////////////////////////////////////////////////////////////////////
-
      @Transactional
-     public Boolean checkStayReservationOkay() {
+     public ResponseEntity<Message> makeStayReservation(User user, Long stayId, ReservationRequest reservationRequest) {
+         Stay stay = loadStayById(stayId);
+         if(checkStayReservationAvailable(reservationRequest)){
+             stayReservationRepository.save(reservationRequest.toStayReservationEntity(user, stay));
+         }
+         else{
+             throw new IllegalArgumentException("해당 날짜는 예약이 불가능합니다");
+         }
+         return new ResponseEntity<>(new Message("예약에 성공하였습니다!"), HttpStatus.ACCEPTED);
+     }
+
+
+     ///////////////////////////////////////////////////////////////////////
+     @Transactional
+     public Boolean checkStayReservationAvailable(ReservationRequest reservationRequest) {
+         ///Some logic
          return true;
      }
 
-     @Transactional
-     public void updateStayAvailability() {
-
+     public Stay loadStayById(Long stayId){
+         return stayRepository.findById(stayId).orElseThrow(
+                 ()-> new NullPointerException("해당 숙소정보를 찾을 수 없습니다")
+         );
      }
 
-     @Transactional
-     public Stay getStayById() {
-         return null;
+     public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
+//         List<Stay> stayList = stayRepository.findBySearchOption(cost, title);
+         return new ResponseEntity<>(
+                 stayRepository.findBySearchOption(request)
+                         .stream()
+                         .map(StayListResponse::new)
+                         .collect(Collectors.toList()),HttpStatus.OK
+                 );
      }
-
  }
