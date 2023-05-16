@@ -57,7 +57,9 @@ public class UserService implements UserServiceInterface {
             throw  new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
         //response cookie에 jwt 토큰을 추가
-        response.addCookie(new Cookie(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail(), user.getNickname())));
-
+        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail(), user.getNickname()));
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
     }
 }
