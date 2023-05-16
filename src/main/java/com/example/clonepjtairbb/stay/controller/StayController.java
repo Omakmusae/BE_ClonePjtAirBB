@@ -5,9 +5,12 @@ import com.example.clonepjtairbb.common.utils.Message;
 import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
 import com.example.clonepjtairbb.stay.dto.StayListResponse;
 import com.example.clonepjtairbb.stay.dto.StayOneResponse;
+import com.example.clonepjtairbb.stay.entity.Stay;
 import com.example.clonepjtairbb.stay.service.StayService;
 import com.example.clonepjtairbb.user.entity.User;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -47,4 +50,12 @@ public class StayController {
     ){
         return new ResponseEntity<>(stayService.getStayById(id), HttpStatus.OK);
     }
+
+    //필터 적용 조회
+    // @GetMapping("/search")
+    // public ResponseEntity<StayListResponse> searchStay(
+    //     @RequestParam(Stay stay)
+    // ){
+    //     return new ResponseEntity<>(stayService.getStayById(stay), HttpStatus.OK);
+    // }
 }

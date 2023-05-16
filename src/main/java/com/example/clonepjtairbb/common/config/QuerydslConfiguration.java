@@ -1,5 +1,6 @@
 package com.example.clonepjtairbb.common.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,8 +12,11 @@ import jakarta.persistence.PersistenceContext;
 @Configuration
 public class QuerydslConfiguration {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	@Autowired
+	EntityManager entityManager;
+
+	// @PersistenceContext
+	// private EntityManager entityManager;
 
 	@Bean
 	public JPAQueryFactory jpaQueryFactory() {

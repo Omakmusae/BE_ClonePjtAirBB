@@ -11,5 +11,4 @@
 
  public interface StayRepository extends JpaRepository<Stay, Long> {
 
-   List<Stay> findAll();
  }
