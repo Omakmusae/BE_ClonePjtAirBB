@@ -3,11 +3,7 @@ package com.example.clonepjtairbb.stay.controller;
 
 import com.example.clonepjtairbb.common.security.UserDetailsImpl;
 import com.example.clonepjtairbb.common.utils.Message;
-import com.example.clonepjtairbb.stay.dto.RegisterStayRequest;
-import com.example.clonepjtairbb.stay.dto.SearchOptionRequest;
-import com.example.clonepjtairbb.stay.dto.ReservationRequest;
-import com.example.clonepjtairbb.stay.dto.StayListResponse;
-import com.example.clonepjtairbb.stay.dto.StayOneResponse;
+import com.example.clonepjtairbb.stay.dto.*;
 import com.example.clonepjtairbb.stay.entity.Stay;
 import com.example.clonepjtairbb.stay.service.StayService;
 import com.example.clonepjtairbb.user.entity.User;
@@ -54,20 +50,20 @@ public class StayController {
 
 
 
-    @GetMapping("custom")
-    public ResponseEntity<List<Stay>> getSearchItem(
-//            @RequestParam(value = "country", required = false)String country,
-//            @RequestParam(value = "city", required = false)String city,
-//            @RequestParam(value = "minCost", required = false)Integer minCost,
-//            @RequestParam(value = "maxCost", required = false)Integer maxCost,
-//            @RequestParam(value = "stayType", required = false)String stayType
-            SearchOptionRequest request
-    ) {
-//        return stayService.getSearchItem(country, city, minCost, maxCost, stayType);
+    @GetMapping("/search")
+    public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
         return stayService.getSearchItem(request);
     }
 
-    @PostMapping("/{stayId}")
+    @GetMapping("/book/{stayId}")
+    public ResponseEntity<List<BookedDateListResponse>> getBookedDateList(
+            @PathVariable Long stayId
+    ){
+        return stayService.getStayBookedDateList(stayId);
+    }
+
+
+    @PostMapping("/book/{stayId}")
     public ResponseEntity<Message> makeStayReservation(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long stayId,

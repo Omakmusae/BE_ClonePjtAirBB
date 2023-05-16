@@ -4,5 +4,8 @@ public enum CityEnum {
     SEOUL,
     BUSAN,
     DAEJUN,
-    GWANGJU
+    GWANGJU,
+    TOKYO,
+    OSAKA
+
 }
