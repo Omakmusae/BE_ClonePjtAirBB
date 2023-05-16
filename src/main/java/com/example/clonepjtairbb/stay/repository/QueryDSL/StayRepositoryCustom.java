@@ -31,7 +31,6 @@ public class StayRepositoryCustom {
         String descTag = (String) request.getData().get("descTag");             // 숙박 시설 태그
         Integer maxGroupNum = (Integer) request.getData().get("maxGroupNum");   // 최대 게스트 수
 
-
         return  jpaQueryFactory
                 .select(stay)
                 .from(stay)
