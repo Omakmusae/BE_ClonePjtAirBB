@@ -1,8 +1,5 @@
 package com.example.clonepjtairbb.stay.repository.QueryDSL;
 
-import static com.example.clonepjtairbb.stay.entity.QStay.*;
-import static com.example.clonepjtairbb.stay.entity.QStayDetailFeature.*;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +13,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 
 import com.example.clonepjtairbb.TestConfig;
-import com.example.clonepjtairbb.common.enums.BedTypeEnum;
-import com.example.clonepjtairbb.common.enums.CityEnum;
-import com.example.clonepjtairbb.common.enums.CountryEnum;
-import com.example.clonepjtairbb.common.enums.DescTagEnum;
-import com.example.clonepjtairbb.common.enums.StayTypeEnum;
+
 import com.example.clonepjtairbb.stay.dto.SearchOptionRequest;
-import com.example.clonepjtairbb.stay.entity.QStay;
 import com.example.clonepjtairbb.stay.entity.Stay;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import static com.example.clonepjtairbb.stay.entity.QStay.stay;
+
 import jakarta.persistence.EntityManager;
 
 
