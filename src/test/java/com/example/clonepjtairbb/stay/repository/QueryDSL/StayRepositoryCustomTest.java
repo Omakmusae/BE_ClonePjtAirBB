@@ -49,21 +49,38 @@ class StayRepositoryCustomTest {
 	@Test
 	void findBySearchOption() {
 		//given
+
+		CountryEnum country = null;             // 나라
+		CityEnum city = null;                // 도시
+		Integer cost_min = 10000;            // 최소값
+		Integer cost_max= null;;            // 최댓값
+		StayTypeEnum stayType= null;;            // 주거형식
+
+		// Details
+		Integer numBed= null;;             // 침대갯수
+		BedTypeEnum bedType= null;;        // 침대타입
+		Boolean isShared= null;;            // 쉐어여부
+		DescTagEnum descTag= null;;        // 숙소에 대한 설명 태그
+		Calendar checkin_date= null;;        //체크인 요청 날짜
+		Calendar checkout_date= null;;       //체크아웃 요청 날짜
+		Integer groupsize= null;;        // 숙박 인원수
+		List<ConvenienceEnum> convenience= null;;
+
 		System.out.println("테스트를 위해 필터 조건을 입력해주세요");
 		MappedSearchRequest searchRequest = MappedSearchRequest.builder()
-			.country(CountryEnum.KOREA)
-			.city(CityEnum.SEOUL)
-			.cost_min(100)
-			.cost_max(500)
-			.stayType(StayTypeEnum.ROOM)
-			.numBed(2)
-			.bedType(BedTypeEnum.DOUBLE)
-			.isShared(false)
-			.descTag(DescTagEnum.ATTRACTIVE)     // Set the description tag
-			.checkin_date(Calendar.getInstance())
-			.checkout_date(Calendar.getInstance())
-			.groupsize(4)
-			.convenience(Arrays.asList(ConvenienceEnum.WIFI, ConvenienceEnum.WIFI))  // Set the list of conveniences
+			.country(country)
+			.city(city)
+			.cost_min(cost_min)
+			.cost_max(cost_max)
+			.stayType(stayType)
+			.numBed(numBed)
+			.bedType(bedType)
+			.isShared(isShared)
+			.descTag(descTag)
+			.checkin_date(checkin_date)
+			.checkout_date(checkout_date)
+			.groupsize(groupsize)
+			.convenience(convenience)
 			.build();
 		
 		List<Stay> result = testRepository.findBySearchOption(searchRequest);
