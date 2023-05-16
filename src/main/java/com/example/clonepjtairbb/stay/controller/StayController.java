@@ -53,7 +53,7 @@ public class StayController {
 
 
 
-    @GetMapping("custom")
+    @GetMapping("/custom")
     public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
         return stayService.getSearchItem(request);
     }
