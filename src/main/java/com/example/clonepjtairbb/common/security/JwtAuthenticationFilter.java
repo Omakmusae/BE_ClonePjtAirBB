@@ -24,11 +24,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsServiceImpl userDetailsService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        //헤더 확인
-        if(!hasBearer(request)){
-            filterChain.doFilter(request, response);
-            return;
-        }
+//        //헤더 확인 (header에 주기로 한 경우만 해당)
+//        if(!hasBearer(request)){
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
         //인증로직 시작
         String token = jwtUtil.resolveToken(request);  // 접두사 빼고 token만 가져오기
         if(!jwtUtil.validateToken(token)){ // Exception은 JwtUtil에 구현

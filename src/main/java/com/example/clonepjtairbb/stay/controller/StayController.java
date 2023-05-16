@@ -64,6 +64,10 @@ public class StayController {
             @RequestBody ReservationRequest reservationRequest
     ){
         User user = userDetails.getUser();
+        if (user == null){ user = userRepository.findById(1L).orElseThrow(()-> new NullPointerException("test없음"));}
+        if (reservationRequest.getCheckoutDate() == null || reservationRequest.getCheckinDate() == null){
+            throw new IllegalArgumentException("날짜를 선택하지 않았습니다.");
+        }
         return stayService.makeStayReservation(user, stayId, reservationRequest);
     }
 }
