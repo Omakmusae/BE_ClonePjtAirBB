@@ -72,9 +72,7 @@
 
      public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
 //         List<Stay> stayList = stayRepository.findBySearchOption(cost, title);
-         System.out.println("request.getConvenience().toString() = " + request.getConvenience().toString());
          MappedSearchRequest mappedRequest = request.toMappedSearchRequest();
-         System.out.println("mappedRequest.getConvenience().toString() = " + mappedRequest.getConvenience().toString());
          List<StayListResponse> stayResponseList = stayRepositoryCustom.findBySearchOption(mappedRequest)
                  .stream()
                  .map(StayListResponse::new)
