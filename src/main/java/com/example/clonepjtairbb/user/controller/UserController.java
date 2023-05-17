@@ -27,10 +27,10 @@ public class UserController {
 
 	@PostMapping(value ="/api/user/signin")
 	public ResponseEntity<Message> signIn(
-		@RequestBody SignInRequest signInRequest,
-		HttpServletResponse response
-		) {
-			userService.signIn(signInRequest, response);
+			@RequestBody SignInRequest signInRequest,
+			HttpServletResponse response
+	) {
+		userService.signIn(signInRequest, response);
 		return ResponseEntity.ok(new Message("로그인 완료"));
 	}
 }
