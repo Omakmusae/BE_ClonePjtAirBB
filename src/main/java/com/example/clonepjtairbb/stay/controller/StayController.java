@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,10 +28,11 @@ public class StayController {
     @PostMapping
     public ResponseEntity<Message> registerNewStay(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestBody RegisterStayRequest registerStayRequest
+            @RequestBody RegisterStayRequest registerStayRequest,
+            MultipartFile file
     ){
         User user = userDetails.getUser();
-        return stayService.registerNewStay(user, registerStayRequest);
+        return stayService.registerNewStay(user, registerStayRequest, file);
     }
 
     //전체 숙소 조회(no filter)
@@ -49,7 +51,7 @@ public class StayController {
     }
 
 
-
+    // 필터조회
     @GetMapping("/search")
     public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
         return stayService.getSearchItem(request);

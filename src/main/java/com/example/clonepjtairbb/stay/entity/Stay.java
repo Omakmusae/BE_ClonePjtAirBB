@@ -39,7 +39,6 @@
 
      public void setStayDetailFeature(StayDetailFeature stayDetailFeature){ this.stayDetailFeature = stayDetailFeature;}
 
-
      @Builder
      public Stay(
              User host, String title, String content, String thumbnailURL, CountryEnum country, CityEnum city,

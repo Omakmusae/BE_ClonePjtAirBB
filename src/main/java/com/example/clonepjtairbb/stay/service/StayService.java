@@ -1,5 +1,9 @@
  package com.example.clonepjtairbb.stay.service;
 
+ import com.amazonaws.services.s3.AmazonS3Client;
+ import com.amazonaws.services.s3.model.CannedAccessControlList;
+ import com.amazonaws.services.s3.model.ObjectMetadata;
+ import com.amazonaws.services.s3.model.PutObjectRequest;
  import com.example.clonepjtairbb.common.utils.Message;
  import com.example.clonepjtairbb.stay.dto.*;
  import com.example.clonepjtairbb.stay.entity.*;
@@ -12,15 +16,18 @@
  import com.example.clonepjtairbb.stay.repository.*;
  import com.example.clonepjtairbb.user.entity.User;
 
- import lombok.NoArgsConstructor;
  import lombok.RequiredArgsConstructor;
+ import org.springframework.beans.factory.annotation.Value;
  import org.springframework.http.HttpStatus;
  import org.springframework.http.ResponseEntity;
  import org.springframework.stereotype.Service;
  import org.springframework.transaction.annotation.Transactional;
+ import org.springframework.web.multipart.MultipartFile;
 
+ import java.io.IOException;
  import java.util.Calendar;
  import java.util.List;
+ import java.util.UUID;
  import java.util.stream.Collectors;
 
  @Service
@@ -33,10 +40,14 @@
      private final ConvenienceRepository convenienceRepository;
      private final StayReservationRepository stayReservationRepository;
      private final StayReservationRepositoryCustom stayReservationRepositoryCustom;
+//     private final AmazonS3Client amazonS3Client;
+//     @Value("${cloud.aws.s3.bucket}")
+//     private String bucket;
 
 
      @Transactional
-     public ResponseEntity<Message> registerNewStay(User user, RegisterStayRequest registerStayRequest) {
+     public ResponseEntity<Message> registerNewStay(User user, RegisterStayRequest registerStayRequest, final MultipartFile file) {
+
          //request parsing
          Stay newStay = registerStayRequest.toStayEntity(user);
          StayDetailFeature detailFeature = registerStayRequest.toStayDetailFeatureEntity(newStay);
@@ -51,6 +62,7 @@
          stayDetailFeatureRepository.save(detailFeature);
          imageUrlRepository.saveAll(imageUrlList);
          convenienceRepository.saveAll(convenienceList);
+//         String imagePath = saveImg(file);
 
          return new ResponseEntity<>(new Message("숙소 등록 성공"), HttpStatus.CREATED);
      }
