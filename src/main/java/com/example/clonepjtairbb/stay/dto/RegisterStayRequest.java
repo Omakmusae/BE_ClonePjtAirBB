@@ -89,7 +89,7 @@ public class RegisterStayRequest {
                 .hasBBQGRILL(convenienceList.contains("BBQGRILL"))
                 .hasSPORTEQUIPMENT(convenienceList.contains("SPORTEQUIPMENT"))
                 .hasFIREEXTINGUISHER(convenienceList.contains("FIREEXTINGUISHER"))
-                .hasFIRSTAID(convenienceList.contains("FIRSTAID"))
+                .hasFIRSTAID(convenienceList.contains("FIRSTAIDKIT"))
                 .hasWASHER(convenienceList.contains("WASHER"))
                 .build();
     }

@@ -40,8 +40,19 @@ public class StayRepositoryCustom {
                         goeNumBed(request.getNumBed()),
                         eqBedType(request.getBedType()),
                         eqIsShared(request.getIsShared()),
-                        eqDescTag(request.getDescTag())
-
+                        eqDescTag(request.getDescTag()),
+                        ////편의시설/////
+                        hasWIFI(request.getConvenience()),
+                        hasTV(request.getConvenience()),
+                        hasKITCHEN(request.getConvenience()),
+                        hasWASHER(request.getConvenience()),
+                        hasPARKINGLOT(request.getConvenience()),
+                        hasAIRCONDITION(request.getConvenience()),
+                        hasSWIMMINGPOOL(request.getConvenience()),
+                        hasBBQGRILL(request.getConvenience()),
+                        hasSPORTEQUIPMENT(request.getConvenience()),
+                        hasFIRSTAID(request.getConvenience()),
+                        hasFIREEXTINGUISHER(request.getConvenience())
                 )
                 .fetch();
     }
@@ -91,6 +102,41 @@ public class StayRepositoryCustom {
     private BooleanExpression eqDescTag(DescTagEnum descTag){
         return descTag == null ? null : stay.stayDetailFeature.descTag.eq(descTag);
     }
+    //편의시설 필터들
+    private BooleanExpression hasWIFI(List<String> reqConv){
+        return reqConv == null || !reqConv.contains("와이파이") ? null : stay.stayDetailFeature.hasWIFI.eq(true);
+    }
+    private BooleanExpression hasTV(List<String> reqConv){
+        return reqConv == null || !reqConv.contains("TV") ? null : stay.stayDetailFeature.hasTV.eq(true);
+    }
+    private BooleanExpression hasKITCHEN(List<String> reqConv){
+        return reqConv == null || !reqConv.contains("주방") ? null : stay.stayDetailFeature.hasKITCHEN.eq(true);
+    }
+    private BooleanExpression hasWASHER(List<String> reqConv){
+        return reqConv == null || !reqConv.contains("세탁기") ? null : stay.stayDetailFeature.hasWASHER.eq(true);
+    }
+    private BooleanExpression hasPARKINGLOT(List<String> reqConv){
+        return reqConv == null || !reqConv.contains("주차장") ? null : stay.stayDetailFeature.hasPARKINGLOT.eq(true);
+    }
+    private BooleanExpression hasAIRCONDITION(List<String> reqConv){
+        return reqConv == null || !reqConv.contains("에어컨") ? null : stay.stayDetailFeature.hasAIRCONDITION.eq(true);
+    }
+    private BooleanExpression hasSWIMMINGPOOL(List<String> reqConv){
+        return reqConv == null || !reqConv.contains("수영장") ? null : stay.stayDetailFeature.hasSWIMMINGPOOL.eq(true);
+    }
+    private BooleanExpression hasBBQGRILL(List<String> reqConv){
+        return reqConv == null || !reqConv.contains("바베큐") ? null : stay.stayDetailFeature.hasBBQGRILL.eq(true);
+    }
+    private BooleanExpression hasSPORTEQUIPMENT(List<String> reqConv){
+        return reqConv == null || !reqConv.contains("운동기구") ? null : stay.stayDetailFeature.hasSPORTEQUIPMENT.eq(true);
+    }
+    private BooleanExpression hasFIRSTAID(List<String> reqConv){
+        return reqConv == null || !reqConv.contains("구급상자") ? null : stay.stayDetailFeature.hasFIRSTAID.eq(true);
+    }
+    private BooleanExpression hasFIREEXTINGUISHER(List<String> reqConv){
+        return reqConv == null || !reqConv.contains("소화기") ? null : stay.stayDetailFeature.hasFIREEXTINGUISHER.eq(true);
+    }
+
 
 
 

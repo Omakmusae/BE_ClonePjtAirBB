@@ -62,7 +62,7 @@ public class StayOneResponse{
         if (detailFeature.getHasKITCHEN()) convList.add("주방");
         if (detailFeature.getHasWASHER()) convList.add("세탁기");
         if (detailFeature.getHasPARKINGLOT()) convList.add("주차장");
-        if (detailFeature.getHasAIRCONDITION()) convList.add("어에컨");
+        if (detailFeature.getHasAIRCONDITION()) convList.add("에어컨");
         if (detailFeature.getHasSWIMMINGPOOL()) convList.add("수영장");
         if (detailFeature.getHasBBQGRILL()) convList.add("바베큐");
         if (detailFeature.getHasSPORTEQUIPMENT()) convList.add("운동기구");
