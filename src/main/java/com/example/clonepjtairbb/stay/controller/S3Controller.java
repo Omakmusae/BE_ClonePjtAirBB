@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -21,11 +23,12 @@ public class S3Controller {
     private final ImageStorageRepository imageStorageRepository;
 //    private final ImageUrl imageUrl;
     @PostMapping("/api/stay/imageUrl")
-    public ResponseEntity<Message> upLoadImage(@RequestPart(value = "img") MultipartFile file){
+    public ResponseEntity<Message> upLoadImage(@RequestPart(value = "img") List<MultipartFile> fileList){
         log.info("일단 메서드는 된다");
-        String imgURL = s3Util.uploadImg(file);
-        ImageStorage imageStorage = new ImageStorage(imgURL);
-        imageStorageRepository.saveAndFlush(imageStorage);
+        List<String> imgUrlList = s3Util.uploadImg(fileList);
+        for(String url : imgUrlList){
+            imageStorageRepository.save(new ImageStorage(url));
+        }
         return new ResponseEntity<>(new Message("이미지 저장완료"), HttpStatus.OK);
     }
 }
