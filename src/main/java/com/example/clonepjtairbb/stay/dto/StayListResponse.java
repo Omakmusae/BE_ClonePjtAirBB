@@ -13,7 +13,7 @@ public class StayListResponse {
     private String hostNickname;
     private Integer costPerDay;
     private String stayType;
-    private String thumbnailUrl;
+    private String img;
 
     public StayListResponse(Stay stay) {
         this.stayId = stay.getId();
@@ -22,6 +22,6 @@ public class StayListResponse {
         this.hostNickname = stay.getHost().getNickname();
         this.costPerDay = stay.getCostPerDay();
         this.stayType = stay.getStayType().toString();
-        this.thumbnailUrl = stay.getThumbnailURL();
+        this.img = stay.getThumbnailURL();
     }
 }

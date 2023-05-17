@@ -31,19 +31,19 @@ public class SearchOptionRequest {
 
     public MappedSearchRequest toMappedSearchRequest(){
         return MappedSearchRequest.builder()
-                .country(country == null ? null : CountryEnum.valueOf(country))
-                .city(city == null ? null : CityEnum.valueOf(city))
+                .country(country == null ? null : CountryEnum.fromString(country))
+                .city(city == null ? null : CityEnum.fromString(city))
                 .cost_min(cost_min == null ? null : Integer.valueOf(cost_min))
                 .cost_max(cost_max == null ? null : Integer.valueOf(cost_max))
-                .stayType(stayType == null ? null : StayTypeEnum.valueOf(stayType))
+                .stayType(stayType == null ? null : StayTypeEnum.fromString(stayType))
                 .numBed(numBed == null ? null : Integer.valueOf(numBed))
-                .bedType(bedType == null ? null : BedTypeEnum.valueOf(bedType))
+                .bedType(bedType == null ? null : BedTypeEnum.fromString(bedType))
                 .isShared(isShared == null ? null : isShared.equals("true"))
-                .descTag(descTag == null ? null : DescTagEnum.valueOf(descTag))
+                .descTag(descTag == null ? null : DescTagEnum.fromString(descTag))
                 .checkin_date(checkin_date == null ? null : stringToCalendar(checkin_date))
                 .checkout_date(checkout_date == null ? null : stringToCalendar(checkout_date))
                 .groupsize(groupsize == null ? null : Integer.valueOf(groupsize))
-                .convenience(convenience == null ? null : convenience.stream().map(ConvenienceEnum::valueOf).toList())
+                .convenience(convenience == null ? null : convenience.stream().map(ConvenienceEnum::fromString).toList())
                 .build();
     }
 

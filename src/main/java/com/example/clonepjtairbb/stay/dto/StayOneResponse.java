@@ -4,10 +4,13 @@ import com.example.clonepjtairbb.common.enums.BedTypeEnum;
 import com.example.clonepjtairbb.common.enums.CityEnum;
 import com.example.clonepjtairbb.common.enums.CountryEnum;
 import com.example.clonepjtairbb.common.enums.StayTypeEnum;
+import com.example.clonepjtairbb.stay.entity.ImageUrl;
 import com.example.clonepjtairbb.stay.entity.Stay;
 import com.example.clonepjtairbb.stay.entity.StayDetailFeature;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -21,9 +24,8 @@ public class StayOneResponse{
     private StayTypeEnum stayType;
     private Integer numBed;
     private BedTypeEnum bedType;
-//    private BathTypeEnum bathType;
     private Boolean isGuest;
-    private String thumbnailUrl;
+    private List<String> imgUrlList;
     private String stayContent;
     private String descTag;
     private Integer checkInAfter;
@@ -45,7 +47,7 @@ public class StayOneResponse{
         this.bedType = detailFeature.getBedType();
 //        this.bathType = detailFeature.getBathType();
         this.isGuest = detailFeature.getIsAlone();
-        this.thumbnailUrl = stay.getThumbnailURL();
+        this.imgUrlList = stay.getStayDetailFeature().getImageUrlList().stream().map(ImageUrl::getUrl).toList();
         this.stayContent = stay.getContent();
         this.descTag = detailFeature.getDescTag().toString();
         this.checkInAfter = detailFeature.getCheckInAfter();
