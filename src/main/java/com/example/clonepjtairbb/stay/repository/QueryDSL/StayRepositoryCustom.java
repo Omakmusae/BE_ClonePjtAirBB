@@ -3,26 +3,16 @@ package com.example.clonepjtairbb.stay.repository.QueryDSL;
 
 import com.example.clonepjtairbb.common.enums.*;
 import com.example.clonepjtairbb.stay.dto.MappedSearchRequest;
-import com.example.clonepjtairbb.stay.entity.Convenience;
 import com.example.clonepjtairbb.stay.entity.Stay;
-import com.querydsl.core.types.ExpressionUtils;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.querydsl.core.*;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.springframework.data.jpa.domain.Specification;
-
-import static com.example.clonepjtairbb.stay.entity.QConvenience.convenience1;
 import static com.example.clonepjtairbb.stay.entity.QStay.stay;
-import static com.example.clonepjtairbb.stay.entity.QStayDetailFeature.stayDetailFeature;
 import static com.example.clonepjtairbb.stay.entity.QStayReservation.stayReservation;
 
 
