@@ -42,12 +42,7 @@ public class StayRepositoryCustom {
                         containsAllconv(request.getConvenience())
                 )
                 .fetch();
-
-
     }
-
-
-
 
     // 나라
     private BooleanExpression eqCountry(CountryEnum country){
