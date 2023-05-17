@@ -26,6 +26,7 @@ public class MappedSearchRequest {
     private Calendar checkout_date;       //체크아웃 요청 날짜
     private Integer groupsize;        // 숙박 인원수
     private List<ConvenienceEnum> convenience;
+
     @Builder
     public MappedSearchRequest(CountryEnum country, CityEnum city, Integer cost_min, Integer cost_max, StayTypeEnum stayType, Integer numBed, BedTypeEnum bedType, Boolean isShared, DescTagEnum descTag, Calendar checkin_date, Calendar checkout_date, Integer groupsize, List<ConvenienceEnum> convenience) {
         this.country = country;
