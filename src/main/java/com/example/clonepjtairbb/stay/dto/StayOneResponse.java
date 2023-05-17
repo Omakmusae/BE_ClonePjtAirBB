@@ -18,12 +18,12 @@ public class StayOneResponse{
     private Long id;
     private String stayTitle;
     private String hostNickname;
-    private CountryEnum country;
-    private CityEnum city;
+    private String country;
+    private String city;
     private Integer costPerDay;
-    private StayTypeEnum stayType;
+    private String stayType;
     private Integer numBed;
-    private BedTypeEnum bedType;
+    private String bedType;
     private Boolean isGuest;
     private List<String> imgUrlList;
     private String stayContent;
@@ -37,14 +37,14 @@ public class StayOneResponse{
         this.id = stay.getId();
         this.stayTitle = stay.getTitle();
         this.hostNickname = stay.getHost().getNickname();
-        this.country = stay.getCountry();
-        this.city = stay.getCity();
+        this.country = stay.getCountry().getCountryName();
+        this.city = stay.getCity().getCity();
         this.costPerDay = stay.getCostPerDay();
-        this.stayType = stay.getStayType();
+        this.stayType = stay.getStayType().getStayType();
 
         StayDetailFeature detailFeature = stay.getStayDetailFeature();
         this.numBed = detailFeature.getNumBed();
-        this.bedType = detailFeature.getBedType();
+        this.bedType = detailFeature.getBedType().getBedType();
 //        this.bathType = detailFeature.getBathType();
         this.isGuest = detailFeature.getIsAlone();
         this.imgUrlList = stay.getStayDetailFeature().getImageUrlList().stream().map(ImageUrl::getUrl).toList();
