@@ -28,11 +28,10 @@ public class StayController {
     @PostMapping
     public ResponseEntity<Message> registerNewStay(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestBody RegisterStayRequest registerStayRequest,
-            MultipartFile file
+            @RequestBody RegisterStayRequest registerStayRequest
     ){
         User user = userDetails.getUser();
-        return stayService.registerNewStay(user, registerStayRequest, file);
+        return stayService.registerNewStay(user, registerStayRequest);
     }
 
     //전체 숙소 조회(no filter)
