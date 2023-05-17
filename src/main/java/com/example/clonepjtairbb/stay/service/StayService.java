@@ -1,6 +1,8 @@
  package com.example.clonepjtairbb.stay.service;
 
+
  import com.example.clonepjtairbb.common.utils.Message;
+ import com.example.clonepjtairbb.common.utils.S3Util;
  import com.example.clonepjtairbb.stay.dto.*;
  import com.example.clonepjtairbb.stay.entity.ImageUrl;
  import com.example.clonepjtairbb.stay.entity.Stay;
@@ -10,15 +12,23 @@
  import com.example.clonepjtairbb.stay.repository.QueryDSL.StayReservationRepositoryCustom;
  import com.example.clonepjtairbb.user.entity.User;
  import lombok.RequiredArgsConstructor;
+ import lombok.extern.slf4j.Slf4j;
+ import org.springframework.beans.factory.annotation.Value;
  import org.springframework.http.HttpStatus;
  import org.springframework.http.ResponseEntity;
  import org.springframework.stereotype.Service;
  import org.springframework.transaction.annotation.Transactional;
+ import org.springframework.web.multipart.MultipartFile;
 
+ import java.io.File;
+ import java.io.FileOutputStream;
+ import java.io.IOException;
  import java.util.Calendar;
  import java.util.List;
+ import java.util.UUID;
  import java.util.stream.Collectors;
 
+ @Slf4j
  @Service
  @RequiredArgsConstructor
  public class StayService{
@@ -28,10 +38,11 @@
      private final ImageUrlRepository imageUrlRepository;
      private final StayReservationRepository stayReservationRepository;
      private final StayReservationRepositoryCustom stayReservationRepositoryCustom;
-
+     private final S3Util s3Util;
 
      @Transactional
      public ResponseEntity<Message> registerNewStay(User user, RegisterStayRequest registerStayRequest) {
+
          //request parsing
          Stay newStay = registerStayRequest.toStayEntity(user);
          StayDetailFeature detailFeature = registerStayRequest.toStayDetailFeatureEntity(newStay);
@@ -57,7 +68,6 @@
                          .collect(Collectors.toList()),
                  HttpStatus.OK
          );
-
      }
 
      public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
