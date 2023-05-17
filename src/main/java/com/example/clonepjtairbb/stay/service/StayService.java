@@ -1,5 +1,6 @@
  package com.example.clonepjtairbb.stay.service;
 
+ import com.example.clonepjtairbb.common.enums.CountryEnum;
  import com.amazonaws.services.s3.AmazonS3Client;
  import com.amazonaws.services.s3.model.*;
  import com.amazonaws.util.IOUtils;
@@ -97,7 +98,7 @@
      @Transactional
      public ResponseEntity<Message> makeStayReservation(User user, Long stayId, ReservationRequest reservationRequest) {
          Stay stay = loadStayById(stayId);
-         if(checkStayReservationAvailable(reservationRequest)){
+         if(checkStayReservationAvailable(reservationRequest, stay)){
              stayReservationRepository.save(reservationRequest.toStayReservationEntity(user, stay));
          }
          else{
@@ -119,8 +120,8 @@
      ///////////////////////////////////////////////////////////////////////
 
      @Transactional
-     public Boolean checkStayReservationAvailable(ReservationRequest reservationRequest) {
-         return stayReservationRepositoryCustom.existsOverlappingPreviousReservation(reservationRequest)
+     public Boolean checkStayReservationAvailable(ReservationRequest reservationRequest, Stay stay) {
+         return stayReservationRepositoryCustom.existsOverlappingPreviousReservation(reservationRequest, stay)
                  && !reservationRequest.getCheckinDate().toCalendar().before(Calendar.getInstance());
      }
      public Stay loadStayById(Long stayId){

@@ -13,15 +13,15 @@ public class StayListResponse {
     private String hostNickname;
     private Integer costPerDay;
     private String stayType;
-    private String thumbnailUrl;
+    private String img;
 
     public StayListResponse(Stay stay) {
         this.stayId = stay.getId();
-        this.country = stay.getCountry().toString();
-        this.city = stay.getCity().toString();
+        this.country = stay.getCountry().getCountryName();
+        this.city = stay.getCity().getCity();
         this.hostNickname = stay.getHost().getNickname();
         this.costPerDay = stay.getCostPerDay();
-        this.stayType = stay.getStayType().toString();
-        this.thumbnailUrl = stay.getThumbnailURL();
+        this.stayType = stay.getStayType().getStayType();
+        this.img = stay.getThumbnailURL();
     }
 }
