@@ -29,7 +29,7 @@
 내가 원하는 옵션으로 검색하여 알맞은 숙소를 구할 수는 없을까?</br>
 - 다양한 검색 옵션을 통한 최적의 숙소 구하기
 
-#### 바로가기 👉 (url 작성해야함)
+#### 바로가기 👉 http://airbnb-clone-hh99.s3-website.ap-northeast-2.amazonaws.com/
 
 </br>
 
