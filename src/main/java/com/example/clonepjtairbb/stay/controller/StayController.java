@@ -77,5 +77,17 @@ public class StayController {
         }
         return stayService.makeStayReservation(user, stayId, reservationRequest);
     }
+
+    @PostMapping("/bulkpost")
+    public Message makeStayReservation(
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @RequestBody List<RegisterStayRequest> requestList
+    ){
+        User user = userDetails.getUser();
+        for(RegisterStayRequest request : requestList){
+            stayService.registerNewStay(user, request);
+        }
+        return new Message("성공!");
+    }
 }
 
