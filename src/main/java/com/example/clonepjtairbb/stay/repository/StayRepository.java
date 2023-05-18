@@ -7,5 +7,5 @@
  import java.util.List;
 
  public interface StayRepository extends JpaRepository<Stay, Long> {
-  List<Stay> findTop20ByIdIsGreaterThan(Long zero);
+  List<Stay> findTop60ByIdIsGreaterThan(Long zero);
  }

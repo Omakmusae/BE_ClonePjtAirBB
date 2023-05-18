@@ -54,6 +54,7 @@ public class StayRepositoryCustom {
                         hasFIRSTAID(request.getConvenience()),
                         hasFIREEXTINGUISHER(request.getConvenience())
                 )
+                .limit(60L)
                 .fetch();
     }
 

@@ -17,9 +17,9 @@
 //    public CorsConfigurationSource corsConfigurationSource() {
 //        CorsConfiguration config = new CorsConfiguration();
 //
-//        config.setAllowedOrigins(List.of(CLIENT_URL, "*"));
+//        config.setAllowedOrigins(List.of(CLIENT_URL));
 //        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-//        config.setAllowedHeaders(List.of("*"));
+//        config.setAllowedHeaders(List.of("Cookie","Access-Control-Request-Method","Access-Control-Request-Headers"));
 //        config.setExposedHeaders(List.of(JwtUtil.AUTHORIZATION_HEADER));
 //        config.setAllowCredentials(true);
 //

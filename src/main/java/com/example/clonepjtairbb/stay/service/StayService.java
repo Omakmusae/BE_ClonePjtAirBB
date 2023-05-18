@@ -14,6 +14,8 @@
  import lombok.RequiredArgsConstructor;
  import lombok.extern.slf4j.Slf4j;
  import org.springframework.beans.factory.annotation.Value;
+ import org.springframework.cache.annotation.Cacheable;
+ import org.springframework.cache.annotation.EnableCaching;
  import org.springframework.http.HttpStatus;
  import org.springframework.http.ResponseEntity;
  import org.springframework.stereotype.Service;
@@ -30,6 +32,7 @@
 
  @Slf4j
  @Service
+ @EnableCaching
  @RequiredArgsConstructor
  public class StayService{
      private final StayRepository stayRepository;
@@ -59,10 +62,11 @@
          return new ResponseEntity<>(new Message("숙소 등록 성공"), HttpStatus.CREATED);
      }
 
+     @Cacheable(value = "getAllStay")
      @Transactional
      public ResponseEntity<List<StayListResponse>> getAllStay() {
          return new ResponseEntity<>(
-             stayRepository.findTop20ByIdIsGreaterThan(0L)
+             stayRepository.findTop60ByIdIsGreaterThan(0L)
                          .stream()
                          .map(StayListResponse::new)
                          .collect(Collectors.toList()),
@@ -70,6 +74,8 @@
          );
      }
 
+     @Cacheable(value = "getA")
+     @Transactional
      public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
 //         List<Stay> stayList = stayRepository.findBySearchOption(cost, title);
          MappedSearchRequest mappedRequest = request.toMappedSearchRequest();
@@ -113,7 +119,7 @@
      @Transactional
      public Boolean checkStayReservationAvailable(ReservationRequest reservationRequest, Stay stay) {
          return stayReservationRepositoryCustom.existsOverlappingPreviousReservation(reservationRequest, stay)
-                 && !reservationRequest.getCheckinDate().toCalendar().before(Calendar.getInstance());
+                 && !reservationRequest.checkinAsCalendar().before(Calendar.getInstance());
      }
      public Stay loadStayById(Long stayId){
          return stayRepository.findById(stayId).orElseThrow(

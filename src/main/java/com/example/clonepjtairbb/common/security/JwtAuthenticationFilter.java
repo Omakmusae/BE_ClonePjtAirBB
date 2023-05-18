@@ -29,7 +29,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //            filterChain.doFilter(request, response);
 //            return;
 //        }
+
         String token = jwtUtil.resolveToken(request);  // 접두사 빼고 token만 가져오기
+        if(token == null){
+            filterChain.doFilter(request,response);
+            return;
+        }
         if(!jwtUtil.validateToken(token)){ // Exception은 JwtUtil에 구현
             filterChain.doFilter(request, response);
             return;
