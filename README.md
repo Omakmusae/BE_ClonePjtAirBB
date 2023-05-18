@@ -42,12 +42,10 @@
 - 협업 notion : [notion](https://climbing-marjoram-ab8.notion.site/AirBnB-12-b01070597fb4475bbc2e557e766d22ed)
 - FE Repo : [FrontEnd](https://github.com/ClonePjtAirBB/FE_Airbnb_Clone.git)
 - BE Repo : [BackEnd](https://github.com/ClonePjtAirBB/BE_ClonePjtAirBB.git)
-- 시연 영상 : url 입력 요함
-- 사이트 주소 : url 입력 요함
 
 <br>
 
-## 📚 Project Architecture (제외여부 결정 요함)
+## 📚 Project Architecture 
 <img src="https://user-images.githubusercontent.com/40461588/236686167-a2eadca9-02e4-4649-8dc6-17d7cfd4b494.png">
 
 <br>
