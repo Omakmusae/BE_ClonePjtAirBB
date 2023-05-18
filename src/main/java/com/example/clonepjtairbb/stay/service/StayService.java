@@ -14,6 +14,9 @@
  import lombok.RequiredArgsConstructor;
  import lombok.extern.slf4j.Slf4j;
  import org.springframework.beans.factory.annotation.Value;
+ import org.springframework.cache.annotation.CacheEvict;
+ import org.springframework.cache.annotation.Cacheable;
+ import org.springframework.cache.annotation.EnableCaching;
  import org.springframework.http.HttpStatus;
  import org.springframework.http.ResponseEntity;
  import org.springframework.stereotype.Service;
@@ -30,6 +33,7 @@
 
  @Slf4j
  @Service
+ @EnableCaching
  @RequiredArgsConstructor
  public class StayService{
      private final StayRepository stayRepository;
@@ -38,8 +42,9 @@
      private final ImageUrlRepository imageUrlRepository;
      private final StayReservationRepository stayReservationRepository;
      private final StayReservationRepositoryCustom stayReservationRepositoryCustom;
-     private final S3Util s3Util;
 
+
+     @CacheEvict(value = {"getSearchItem", "getAllStay"}, allEntries = true)
      @Transactional
      public ResponseEntity<Message> registerNewStay(User user, RegisterStayRequest registerStayRequest) {
 
@@ -59,7 +64,8 @@
          return new ResponseEntity<>(new Message("숙소 등록 성공"), HttpStatus.CREATED);
      }
 
-     @Transactional
+     @Cacheable(value = "getAllStay")
+     @Transactional(readOnly = true)
      public ResponseEntity<List<StayListResponse>> getAllStay() {
          return new ResponseEntity<>(
              stayRepository.findTop20ByIdIsGreaterThan(0L)
@@ -70,6 +76,8 @@
          );
      }
 
+     @Cacheable(value = "getSearchItem")
+     @Transactional(readOnly = true)
      public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
 //         List<Stay> stayList = stayRepository.findBySearchOption(cost, title);
          MappedSearchRequest mappedRequest = request.toMappedSearchRequest();
@@ -87,6 +95,7 @@
          return new StayOneResponse(stay);
      }
 
+     @CacheEvict(value = {"getSearchItem", "getAllStay"}, allEntries = true)
      @Transactional
      public ResponseEntity<Message> makeStayReservation(User user, Long stayId, ReservationRequest reservationRequest) {
          Stay stay = loadStayById(stayId);
@@ -99,7 +108,7 @@
          return new ResponseEntity<>(new Message("예약에 성공하였습니다!"), HttpStatus.ACCEPTED);
      }
 
-     @Transactional
+     @Transactional(readOnly = true)
      public ResponseEntity<List<BookedDateListResponse>> getStayBookedDateList(Long stayId) {
          Stay stay = loadStayById(stayId);
          List<BookedDateListResponse> responseList = stayReservationRepository.findByStay(stay)
@@ -111,11 +120,13 @@
 
      ///////////////////////////////////////////////////////////////////////
 
-     @Transactional
+     @Transactional(readOnly = true)
      public Boolean checkStayReservationAvailable(ReservationRequest reservationRequest, Stay stay) {
          return stayReservationRepositoryCustom.existsOverlappingPreviousReservation(reservationRequest, stay)
                  && !reservationRequest.getCheckinDate().toCalendar().before(Calendar.getInstance());
      }
+
+     @Transactional(readOnly = true)
      public Stay loadStayById(Long stayId){
          return stayRepository.findById(stayId).orElseThrow(
                  ()-> new NullPointerException("해당 숙소정보를 찾을 수 없습니다")
