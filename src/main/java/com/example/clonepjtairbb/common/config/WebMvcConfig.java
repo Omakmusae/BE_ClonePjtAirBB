@@ -6,16 +6,19 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.List;
+
 @Configuration
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
-    private final static String CLIENT_URL = "http://54.180.24.156:3000/";
+    private final static String CLIENT_URL = "http://airbnb-clone-hh99.s3-website.ap-northeast-2.amazonaws.com";
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000", CLIENT_URL)
                 .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("*")
                 .exposedHeaders(JwtUtil.AUTHORIZATION_HEADER)
                 .allowCredentials(true);
     }

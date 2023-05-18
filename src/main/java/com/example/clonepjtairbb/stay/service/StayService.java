@@ -14,7 +14,9 @@
  import lombok.RequiredArgsConstructor;
  import lombok.extern.slf4j.Slf4j;
  import org.springframework.beans.factory.annotation.Value;
+
  import org.springframework.cache.annotation.CacheEvict;
+
  import org.springframework.cache.annotation.Cacheable;
  import org.springframework.cache.annotation.EnableCaching;
  import org.springframework.http.HttpStatus;
@@ -65,16 +67,17 @@
      }
 
      @Cacheable(value = "getAllStay")
-     @Transactional(readOnly = true)
+     @Transactional
      public ResponseEntity<List<StayListResponse>> getAllStay() {
          return new ResponseEntity<>(
-             stayRepository.findTop20ByIdIsGreaterThan(0L)
+             stayRepository.findTop60ByIdIsGreaterThan(0L)
                          .stream()
                          .map(StayListResponse::new)
                          .collect(Collectors.toList()),
                  HttpStatus.OK
          );
      }
+
 
      @Cacheable(value = "getSearchItem")
      @Transactional(readOnly = true)
@@ -123,7 +126,7 @@
      @Transactional(readOnly = true)
      public Boolean checkStayReservationAvailable(ReservationRequest reservationRequest, Stay stay) {
          return stayReservationRepositoryCustom.existsOverlappingPreviousReservation(reservationRequest, stay)
-                 && !reservationRequest.getCheckinDate().toCalendar().before(Calendar.getInstance());
+                 && !reservationRequest.checkinAsCalendar().before(Calendar.getInstance());
      }
 
      @Transactional(readOnly = true)
