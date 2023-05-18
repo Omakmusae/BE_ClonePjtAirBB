@@ -31,7 +31,7 @@
 
 #### 바로가기 👉 http://airbnb-clone-hh99.s3-website.ap-northeast-2.amazonaws.com/
 
-</br>
+#### 시연영상 👉 https://youtu.be/sZ5lxnDfaHs
 
 ## 😎 Introduction
 
