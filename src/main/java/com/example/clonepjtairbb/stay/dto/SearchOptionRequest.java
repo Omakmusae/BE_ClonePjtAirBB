@@ -43,7 +43,7 @@ public class SearchOptionRequest {
                 .checkin_date(checkin_date == null ? null : stringToCalendar(checkin_date))
                 .checkout_date(checkout_date == null ? null : stringToCalendar(checkout_date))
                 .groupsize(groupsize == null ? null : Integer.valueOf(groupsize))
-                .convenience(convenience == null ? null : convenience.stream().map(ConvenienceEnum::fromString).toList())
+                .convenience(convenience == null ? null : convenience)
                 .build();
     }
 

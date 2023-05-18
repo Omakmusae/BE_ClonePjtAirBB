@@ -7,3 +7,13 @@ spring:
     username: ENC(UqLApY5ox+wtETTgrpb7WCncGkfDARN0)
     password: ENC(zrw+5JxSAGgSoGML6qeVZ1jfyOWlMa60)
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+cloud:
+  aws:
+    s3:
+      bucket: clonecodingairbb
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: ENC(Sb6y8B4R2KE1o2S4p704B0Wmm0W4E8X3K6zmz2P+QoE=)
+      secretKey: ENC(KnaWa0nSwld2HpIwRg7p6ccAYqadaB7629PD8BxdQ6z5eFrIS7Y17agWNiroQ+Z9dN0LFJB+nLk=)

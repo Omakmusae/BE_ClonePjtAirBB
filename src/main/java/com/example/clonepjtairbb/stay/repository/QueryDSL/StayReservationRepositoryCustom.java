@@ -1,7 +1,9 @@
 package com.example.clonepjtairbb.stay.repository.QueryDSL;
 
 import com.example.clonepjtairbb.stay.dto.ReservationRequest;
+import com.example.clonepjtairbb.stay.entity.Stay;
 import com.example.clonepjtairbb.stay.entity.StayReservation;
+import com.example.clonepjtairbb.stay.repository.StayRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +17,13 @@ import static com.example.clonepjtairbb.stay.entity.QStayReservation.stayReserva
 @RequiredArgsConstructor
 @Repository
 public class StayReservationRepositoryCustom {
+
     private final JPAQueryFactory jpaQueryFactory;
-    public Boolean existsOverlappingPreviousReservation(ReservationRequest request) {
+    public Boolean existsOverlappingPreviousReservation(ReservationRequest request, Stay stay) {
         StayReservation reservation = jpaQueryFactory
                 .selectFrom(stayReservation)
                 .where(
+                        stayReservation.stay.eq(stay),
                         checkReservationOkay(
                                 request.getCheckinDate().toCalendar(), request.getCheckoutDate().toCalendar()
                         ).not()

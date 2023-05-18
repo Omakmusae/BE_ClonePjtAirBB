@@ -16,9 +16,11 @@ public class StayReservation {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "stay_id")
     private Stay stay;
 
     private Calendar checkinDate;

@@ -17,11 +17,11 @@ public class StayListResponse {
 
     public StayListResponse(Stay stay) {
         this.stayId = stay.getId();
-        this.country = stay.getCountry().toString();
-        this.city = stay.getCity().toString();
+        this.country = stay.getCountry().getCountryName();
+        this.city = stay.getCity().getCity();
         this.hostNickname = stay.getHost().getNickname();
         this.costPerDay = stay.getCostPerDay();
-        this.stayType = stay.getStayType().toString();
+        this.stayType = stay.getStayType().getStayType();
         this.img = stay.getThumbnailURL();
     }
 }
