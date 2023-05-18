@@ -23,7 +23,7 @@ public class StayReservationRepositoryCustom {
                 .where(
                         stayReservation.stay.eq(stay),
                         checkReservationOkay(
-                                request.getCheckinDate().toCalendar(), request.getCheckoutDate().toCalendar()
+                                request.checkinAsCalendar(), request.checkoutAsCalendar()
                         ).not()
                 )
                 .fetchFirst();
