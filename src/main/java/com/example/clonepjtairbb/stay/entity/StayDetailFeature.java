@@ -27,12 +27,10 @@ public class StayDetailFeature {
 
     private BedTypeEnum bedType;
 
-    private BathTypeEnum bathType;
-
     private Boolean isAlone;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Convenience> convenienceList = new ArrayList<>();
+//    @OneToMany(fetch = FetchType.EAGER)
+//    private List<Convenience> convenienceList = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<ImageUrl> imageUrlList = new ArrayList<>();
@@ -42,22 +40,46 @@ public class StayDetailFeature {
     private Integer checkInAfter;
     private Integer checkOutBefore;
     private Integer maxGroupNum;
+    private Boolean hasWIFI = false;
+    private Boolean hasTV = false;
+    private Boolean hasKITCHEN = false;
+    private Boolean hasWASHER = false;
+    private Boolean hasPARKINGLOT = false;
+    private Boolean hasAIRCONDITION = false;
+    private Boolean hasSWIMMINGPOOL = false;
+    private Boolean hasBBQGRILL = false;
+    private Boolean hasSPORTEQUIPMENT = false;
+    private Boolean hasFIRSTAID = false;
+    private Boolean hasFIREEXTINGUISHER = false;
 
     public void addImageUrl(ImageUrl imageUrl){ this.imageUrlList.add(imageUrl); }
-    public void addConvenience(Convenience convenience){ this.convenienceList.add(convenience); }
 
     @Builder
-    public StayDetailFeature(
-            Stay stay, Integer numBed, BedTypeEnum bedType, BathTypeEnum bathType, Boolean isAlone, DescTagEnum descTag,
-            Integer checkInAfter, Integer checkOutBefore, Integer maxGroupNum) {
+    public StayDetailFeature(Stay stay, Integer numBed, BedTypeEnum bedType, Boolean isAlone,
+                             DescTagEnum descTag, Integer checkInAfter,
+                             Integer checkOutBefore, Integer maxGroupNum, Boolean hasWIFI, Boolean hasTV,
+                             Boolean hasKITCHEN, Boolean hasWASHER, Boolean hasPARKINGLOT, Boolean hasAIRCONDITION,
+                             Boolean hasSWIMMINGPOOL, Boolean hasBBQGRILL, Boolean hasSPORTEQUIPMENT,
+                             Boolean hasFIRSTAID, Boolean hasFIREEXTINGUISHER
+    ) {
         this.stay = stay;
         this.numBed = numBed;
         this.bedType = bedType;
-        this.bathType = bathType;
         this.isAlone = isAlone;
         this.descTag = descTag;
         this.checkInAfter = checkInAfter;
         this.checkOutBefore = checkOutBefore;
         this.maxGroupNum = maxGroupNum;
+        this.hasWIFI = hasWIFI;
+        this.hasTV = hasTV;
+        this.hasKITCHEN = hasKITCHEN;
+        this.hasWASHER = hasWASHER;
+        this.hasPARKINGLOT = hasPARKINGLOT;
+        this.hasAIRCONDITION = hasAIRCONDITION;
+        this.hasSWIMMINGPOOL = hasSWIMMINGPOOL;
+        this.hasBBQGRILL = hasBBQGRILL;
+        this.hasSPORTEQUIPMENT = hasSPORTEQUIPMENT;
+        this.hasFIRSTAID = hasFIRSTAID;
+        this.hasFIREEXTINGUISHER = hasFIREEXTINGUISHER;
     }
 }

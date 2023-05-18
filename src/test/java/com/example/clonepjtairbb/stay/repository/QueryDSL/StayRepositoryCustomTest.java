@@ -64,7 +64,7 @@ class StayRepositoryCustomTest {
 		Calendar checkin_date= null;;        //체크인 요청 날짜
 		Calendar checkout_date= null;;       //체크아웃 요청 날짜
 		Integer groupsize= null;;        // 숙박 인원수
-		List<ConvenienceEnum> convenience= null;;
+		List<String> convenience= null;;
 
 		System.out.println("테스트를 위해 필터 조건을 입력해주세요");
 		MappedSearchRequest searchRequest = MappedSearchRequest.builder()
@@ -82,7 +82,7 @@ class StayRepositoryCustomTest {
 			.groupsize(groupsize)
 			.convenience(convenience)
 			.build();
-		
+
 		List<Stay> result = testRepository.findBySearchOption(searchRequest);
 
 		for (Stay stay : result) {

@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class StayController {
     }
 
 
-
+    // 필터조회
     @GetMapping("/search")
     public ResponseEntity<List<StayListResponse>> getSearchItem(SearchOptionRequest request) {
         return stayService.getSearchItem(request);

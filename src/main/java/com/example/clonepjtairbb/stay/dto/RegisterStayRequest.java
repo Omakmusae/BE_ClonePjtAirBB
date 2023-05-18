@@ -1,7 +1,6 @@
 package com.example.clonepjtairbb.stay.dto;
 
 import com.example.clonepjtairbb.common.enums.*;
-import com.example.clonepjtairbb.stay.entity.Convenience;
 import com.example.clonepjtairbb.stay.entity.ImageUrl;
 import com.example.clonepjtairbb.stay.entity.Stay;
 import com.example.clonepjtairbb.stay.entity.StayDetailFeature;
@@ -9,7 +8,6 @@ import com.example.clonepjtairbb.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,6 +80,17 @@ public class RegisterStayRequest {
                 .checkInAfter(this.checkInAfter)
                 .checkOutBefore(this.checkOutBefore)
                 .maxGroupNum(this.maxGroupNum)
+                .hasWIFI(convenienceList.contains("WIFI"))
+                .hasTV(convenienceList.contains("TV"))
+                .hasKITCHEN(convenienceList.contains("KITCHEN"))
+                .hasPARKINGLOT(convenienceList.contains("PARKINGLOT"))
+                .hasAIRCONDITION(convenienceList.contains("AIRCONDITIONER"))
+                .hasSWIMMINGPOOL(convenienceList.contains("SWIMMINGPOOL"))
+                .hasBBQGRILL(convenienceList.contains("BBQGRILL"))
+                .hasSPORTEQUIPMENT(convenienceList.contains("SPORTEQUIPMENT"))
+                .hasFIREEXTINGUISHER(convenienceList.contains("FIREEXTINGUISHER"))
+                .hasFIRSTAID(convenienceList.contains("FIRSTAIDKIT"))
+                .hasWASHER(convenienceList.contains("WASHER"))
                 .build();
     }
 
@@ -91,16 +100,6 @@ public class RegisterStayRequest {
             ImageUrl imgUrl = new ImageUrl(stayDetailFeature, img);
             stayDetailFeature.addImageUrl(imgUrl);
             returnList.add(imgUrl);
-        }
-        return returnList;
-    }
-
-    public List<Convenience> toConvenienceList(StayDetailFeature stayDetailFeature){
-        List<Convenience> returnList = new ArrayList<>();
-        for(String convString:this.convenienceList){
-            Convenience convenience = new Convenience(stayDetailFeature, ConvenienceEnum.valueOf(convString));
-            stayDetailFeature.addConvenience(convenience);
-            returnList.add(convenience);
         }
         return returnList;
     }
