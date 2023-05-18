@@ -33,6 +33,8 @@
 
 #### 시연영상 👉 https://youtu.be/sZ5lxnDfaHs
 
+#### Notion : https://climbing-marjoram-ab8.notion.site/AirBnB-12-b01070597fb4475bbc2e557e766d22ed
+
 ## 😎 Introduction
 
 - 주제 : 상세 검색을 통한 숙소 검색 사이트
