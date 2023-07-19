@@ -54,7 +54,7 @@
 ### 👉 [API 보러 가기](https://www.notion.so/143b8fbfbea241dbb0cf376b40c5d593?v=f46107b5f27b4c5f9f25d3647e6bd82f)
 <br>
 
-## 🧱 ERD (ERD 수정 필요함)
+## 🧱 ERD
 <img width="818" alt="스크린샷 2023-05-17 18 43 27" src="https://github.com/ClonePjtAirBB/BE_ClonePjtAirBB/assets/108252926/c27fe7b1-5aa6-4746-bfeb-cbfe6ca1f500">
 
 <br>
